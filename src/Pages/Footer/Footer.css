@@ -1,0 +1,158 @@
+
+
+.footer-container {
+    background-color: #120d31;
+    height: 300px;
+    width: 100%;
+    display: flex;
+
+    .footer-column {
+        width: 33.33%;
+        height: 100%;
+    }
+
+    .footer-column-1 {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        color: white;
+        font-size: 2.5rem;
+        
+        .icon-container {
+            display: flex;
+            justify-content: flex-start;
+            margin-left: 50px;
+            align-items: center;
+            gap: 30px;
+
+
+        }
+
+        p {
+            font-size: 1rem;
+
+        }
+    }
+
+    .footer-column-2 {
+        background-color: var(--secundary-color);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+
+        img {
+            width: auto;
+            height: 300px;
+
+        }
+
+        p {
+            position: absolute;
+            top: 250px;
+            color: white;
+            font-weight: 100;
+            font-size: .98rem;
+            font-style: italic;
+        }
+
+    }
+
+
+    .footer-column-3 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 30px;
+
+        p {
+            color: white;
+            text-align: center;
+        }
+
+        #encontranos,
+        #contactanos,
+        #newsletter {
+            font-weight: bold;
+            padding-bottom: 9px;
+
+        }
+
+        .newsletter-container {
+
+            text-align: center;
+
+            button {
+                padding: 7px 10px;
+                margin-left: 3px;
+                font-weight: bold;
+            }
+
+            label {
+                display: block;
+                color: white;
+            }
+
+            input {
+                padding: 8px 10px;
+                width: 300px;
+                border: 1.5px solid transparent;
+                background-color: #302f4d;
+                transition: border .3s ease-in-out;
+                color: white;
+
+
+                &::placeholder {
+                    color: white;
+                }
+
+                &:focus {
+                    outline: none;
+                }
+
+
+                &:hover {
+                    border: 1.5px solid rgb(203, 203, 203);
+
+                }
+            }
+
+
+        }
+    }
+}
+
+
+
+@media screen and (width <=767px) {
+.footer-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+
+
+    .footer-column-1 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+
+        width: 100%;
+        margin: 30px;
+    }
+
+    .footer-column-2 {
+        width: 100%;
+    }
+
+    .footer-column-3 {
+        margin: 30px;
+        width: 100%;
+    }
+}
+}

@@ -1,0 +1,128 @@
+:root {
+    --primary-color: #120d31;
+    --secundary-color: #302f4d;
+    --background-color: rgb(223, 223, 223);
+    --hover-color: #cca43b;
+}
+
+.about-us-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    h2 {
+        font-weight: 300;
+        font-size: 3.5rem;
+        font-style: italic;
+        color: var(--hover-color);
+        
+    }
+
+    p {
+        margin: 50px;
+        width: 80%;
+        font-size: 2rem;
+        text-align: center;
+        font-weight: 350;
+    }
+
+    .border-bottom-cont {
+        width: 70%;
+    }
+
+    .img-details {
+        display: flex;
+        margin: 40px;
+        align-items: center;
+
+        img {
+            width: 800px;
+            height: 500px;
+        }
+    }
+    .img-details-2 {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        margin: 40px;
+
+        img {
+            width: 800px;
+            height: 500px;
+        }
+    }
+
+    img {
+        box-shadow: 10px 11px 28px -18px rgba(0,0,0,0.75);
+    }
+
+    .equipo {
+        margin-bottom: 200px;
+        display: flex;
+
+        h3 {
+            margin: 50px;
+            width: 80%;
+            font-size: 2.5rem;
+            text-align: center;
+            font-weight: 400;
+            text-align: left;
+            color: var(--primary-color);
+        }
+
+        p {
+            font-size: 2rem;
+            text-align: left;
+        }
+    }
+}
+
+@media screen and (width <=767px) { 
+    .border-bottom-cont {
+        width: 100% !important;
+    }
+
+    .about-us-container {
+
+        h2 {
+            font-size: 2.5rem;
+            margin: 10px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin: 10px;
+        }
+
+        .img-details, .img-details-2 {
+            flex-direction: column;
+            margin: 0;
+
+            img {
+                margin: 20px;
+                width: 100%;
+                height: auto;
+            }
+        }
+    }
+
+    .equipo {
+        flex-direction: column;
+
+        .equipo-integrante {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            h3 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1.5rem;
+            }
+        }
+        }
+
+        
+}

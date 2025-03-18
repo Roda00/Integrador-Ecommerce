@@ -1,0 +1,57 @@
+
+
+.contacto-container {
+    display: flex;
+    margin: 0px 0px 50px 50px;
+    height: 100%;
+    justify-content: center;
+    
+
+}
+
+.contacto-submit {
+    margin-top: 40px;
+    width: 100%;
+    margin-bottom: 200px;
+}
+
+#mensaje {
+
+    max-width: 100%;
+    min-width: 100%;
+    min-height: 200px;
+}
+
+.form-cont {
+    width: 50%;
+    margin: 0px 20px 0px 0px;
+    
+    
+    textarea {
+        padding: 10px;
+        font-family: inherit;
+    }
+}
+
+iframe {
+    height: 504px;
+}
+
+@media screen and (width <=767px) { 
+    .contacto-container {
+        flex-direction: column;
+        margin: 20px;
+
+        .form-cont {
+            width: 100%;
+        }
+    }
+
+    iframe {
+        width: auto;
+    }
+
+    .contacto-submit {
+        margin-bottom: 0px;
+    }
+}

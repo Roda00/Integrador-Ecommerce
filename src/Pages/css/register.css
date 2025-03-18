@@ -1,0 +1,108 @@
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "open sans";
+}
+
+:root {
+    --primary-color: #120d31;
+    --secundary-color: #302f4d;
+    --background-color: rgb(223, 223, 223);
+    --hover-color: #cca43b;
+}
+main {
+    padding-top: 70px;
+}
+
+h1 {
+    text-align: center;
+    margin: 20px;
+    font-weight: 300;
+    font-size: 40px;
+}
+
+
+.form-cont {
+    width: 700px;
+    margin: auto;
+
+    #submit {
+        align-self: center;
+        margin-bottom: 90px;
+        padding: 20px;
+        width: 50%;
+        background-color: var(--primary-color);
+        color: white;
+        font-weight: 100;
+        font-size: 20px;
+        border: none;
+        cursor: pointer;
+        transition: color .2s ease-in-out;
+        border-radius: 5px;
+
+        &:hover {
+            color: var(--hover-color)
+        }
+
+        &:focus {
+            background-color: var(--secundary-color);
+        }
+    }
+
+    form {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
+        #pais {
+            margin-bottom: 40px;
+        }
+
+        label {
+            align-self: flex-start;
+            margin: 20px 0px 20px 0px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 20px;
+
+
+        }
+
+        label+input {
+            position: relative;
+            border: none;
+            border-bottom: 1px solid var(--primary-color);
+            background: rgb(122, 122, 122);
+            background: linear-gradient(90deg, rgba(122, 122, 122, 0) 86%, rgba(2, 0, 36, 1) 100%);
+            border-radius: 2px;
+
+            &:hover {
+                background: rgb(122, 122, 122);
+                background: linear-gradient(90deg, rgba(122, 122, 122, 0) 86%, rgba(204, 164, 59, 1) 100%);
+            }
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    left: 120px;
+    scale: 2;
+}
+
+@media screen and (width <=767px) {
+
+    .form-cont {
+        width: 100%;
+    }
+}
