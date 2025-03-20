@@ -1,61 +1,78 @@
 import React from 'react'
 import '../css/register.css'
 import '../css/styles.css'
+import { useForm } from 'react-hook-form';
+import Swal from 'sweetalert2'
 
+export default function Register({sendRegister}) {
 
-export default function Registes() {
+  const {register, handleSubmit, watch, reset, formState:{errors}} = useForm();
+
+  const password = watch("password")
+
+  const onSubmit = (data) => {sendRegister(data); reset();
+    Swal.fire({
+      icon: "success",
+      title: "Has sido registrado",
+    }); } 
+
+  
   return (
     <main>
   <h1>Registrarme</h1>
   <div className="border-bottom-cont" />
-  <div className="form-cont">
-    <form action="">
+  <div className="form-cont-register">
+    <form action="" onSubmit={handleSubmit(onSubmit)}>
       <label htmlFor="nombre">Nombre completo</label>
       <input
+        {...register("nombrecompleto", {required: "Ingresa un nombre de usuario"})}
         maxLength={35}
+        minLength={6}
         placeholder="Nombre Completo"
         type="text"
         id="nombre"
-        name="Username"
-        required=""
       />
       <label htmlFor="email">Email</label>
       <input
-        required=""
+        {...register("email", {required: "Ingresa un email"})}
+        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
         placeholder="Email"
         type="email"
         id="email"
-        name="email"
       />
       <label htmlFor="contraseña">Contraseña</label>
       <input
-        minLength={8}
-        required=""
+        {...register("password", {
+          required: "Ingresa tu contraseña", 
+          minLength: { value: 8, message: "La contraseña debe tener 8 caracteres como minimo"}
+          })}
         placeholder="Contraseña"
         type="password"
         id="contraseña"
-        name="contraseña"
       />
+      {errors.password && <p>{errors.password.message}</p>}
       <label htmlFor="repetir-contraseña">Repetir contraseña</label>
       <input
-        minLength={8}
-        required=""
+        {...register("passwordConfirm", {
+          required: "Tienes que repetir la contraseña", 
+          validate: (value) => value === password || "Las contrasenas no coinciden"
+        } )}
         placeholder="Repetir contraseña"
         type="password"
         id="repetir-contraseña"
-        name="repetir-contraseña"
+        
       />
+      {errors.passwordConfirm && <p>{errors.passwordConfirm.message}</p>}
       <label htmlFor="date">Fecha de nacimiento</label>
       <input
-        required=""
+        {...register("date", {required: true})}
         max="2024-10-29"
         placeholder="Fecha de nacimiento"
         type="date"
         id="date"
-        name="date"
       />
       <label htmlFor="">Pais de nacimiento</label>
-      <select required="" name="country" id="pais">
+      <select id="pais" {...register("pais", {required: true})}>
         <option value="United States">United States</option>
         <option value="Afghanistan">Afghanistan</option>
         <option value="Albania">Albania</option>
@@ -318,7 +335,7 @@ export default function Registes() {
         <option value="Zambia">Zambia</option>
         <option value="Zimbabwe">Zimbabwe</option>
       </select>
-      <input defaultValue="Completar registro" id="submit" type="submit" />
+      <input defaultValue="Completar registro" id="submit" type="submit"  />
     </form>
   </div>
 </main>

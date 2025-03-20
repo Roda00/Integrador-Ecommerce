@@ -1,16 +1,14 @@
 import React from 'react'
 import '../css/contacto.css'
-import '../css/register.css'
-import '../css/styles.css'
+
 
 export default function Contacto() {
   return (
-    <main>
         <main>
             <h1>Contacto</h1>
             <div className="border-bottom-cont" />
             <div className="contacto-container">
-                <div className="form-cont">
+                <div className="form-cont-contacto">
                     <form action="">
                         <label htmlFor="nombre">Nombre completo</label>
                         <input
@@ -26,7 +24,7 @@ export default function Contacto() {
                             required=""
                             placeholder="Email"
                             type="email"
-                            id="email"
+                            id="email-contact"
                             name="email"
                         />
                         <label htmlFor="mensaje">Dejá tu mensaje</label>
@@ -47,6 +45,5 @@ export default function Contacto() {
                 />
             </div>
         </main>
-    </main>
     )
 }

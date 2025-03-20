@@ -36,17 +36,19 @@ export default function Footer() {
       </div>
       <div className="newsletter-container">
         <form action="">
-          <label htmlFor="email" id="newsletter">
+          <label htmlFor="email-footer" id="newsletter">
             Recibi noticias de nuevos ingresos
           </label>
-          <input
-            id="email"
-            placeholder="ingresa tu email..."
-            type="email"
-            name="email newsletter"
-            required=""
-          />
-          <button>Enviar</button>
+          <div className="input-flex-cont">
+            <input
+              id="email-footer"
+              placeholder="ingresa tu email..."
+              type="email"
+              name="email newsletter"
+              required=""
+            />
+            <button>Enviar</button>
+          </div>
         </form>
       </div>
     </div>

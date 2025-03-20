@@ -20,19 +20,19 @@ export default function Header() {
                         <div className="nav-burger-menu-cont">
                             <ul>
                                 <li className="nav-item">
-                                    <a href="/index.html">Principal</a>
+                                    <NavLink to={"/"}>Principal</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <a href="/Pages/Register.html">Registro</a>
+                                    <NavLink to="/Register">Registro</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <a href="/Pages/Contacto.html">Contacto</a>
+                                    <NavLink to="/Contacto">Contacto</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <a href="/Pages/Acerca de nosotros.html">Acerca de nosotros</a>
+                                    <NavLink to="/About-us">Acerca de nosotros</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <a href="/Pages/Administrador.html">Admin productos</a>
+                                    <NavLink to="/Admin-products">Admin productos</NavLink>
                                 </li>
                             </ul>
                     </div>
@@ -51,7 +51,7 @@ export default function Header() {
                             <NavLink to="/About-us">Acerca de nosotros</NavLink>
                         </li>
                         <li className="nav-item">
-                           <NavLink to="/Admin-products">Admin productos</NavLink>
+                            <NavLink to="/Admin-products">Admin productos</NavLink>
                         </li>
                     </div>
                     <div className="section-user">
