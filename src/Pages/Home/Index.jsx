@@ -2,6 +2,7 @@ import React from 'react'
 import '../css/styles.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCertificate, faHeadset, faTruck, faWallet } from '@fortawesome/free-solid-svg-icons'
+import { NavLink } from 'react-router'
 
 export default function Index({ pianos }) {
 
@@ -20,16 +21,16 @@ export default function Index({ pianos }) {
 
 function pintarPianosDeCola() {
     
-    return pianosDeCola.map((piano) => {
+    return pianosDeCola.map((piano) => { 
         
-
+        console.log(piano
+        )
+        
         return (
             <article>
                 <div className="piano-container" key={piano.id}>
                     <div className="piano-image-container">
-                        <a className="ver-mas" href="">
-                            Ver mas
-                        </a>
+                    <NavLink to={`/Piano-product/${piano.id} `} className="ver-mas">Ver mas </NavLink> 
                         <img
                             src={piano.image}
                             alt=""
@@ -52,8 +53,10 @@ function pintarPianosDeCola() {
         )
     })
 
+  
     
 }
+
 
 function pintarPianosVerticales() {
 
@@ -64,9 +67,7 @@ function pintarPianosVerticales() {
         <article>
             <div className="piano-container" key={piano.id}>
                 <div className="piano-image-container">
-                    <a className="ver-mas" href="">
-                        Ver mas
-                    </a>
+                <NavLink to={`/Piano-product/${piano.id}`} className="ver-mas">Ver mas </NavLink> 
                     <img
                         src={piano.image}
                         alt=""

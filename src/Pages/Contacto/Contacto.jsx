@@ -9,7 +9,7 @@ export default function Contacto() {
             <div className="border-bottom-cont" />
             <div className="contacto-container">
                 <div className="form-cont-contacto">
-                    <form action="">
+                    <form  className='form-contacto'  action="">
                         <label htmlFor="nombre">Nombre completo</label>
                         <input
                             maxLength={35}

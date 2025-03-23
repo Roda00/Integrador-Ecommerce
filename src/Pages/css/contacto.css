@@ -34,7 +34,7 @@
 }
 
 
-form {
+.form-contacto, .form-register {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -114,11 +114,12 @@ iframe {
 }
 
 @media screen and (width <=767px) { 
+
     .contacto-container {
         flex-direction: column;
         margin: 20px;
 
-        .form-cont {
+        .form-cont-contacto {
             width: 100%;
         }
     }
@@ -131,3 +132,4 @@ iframe {
         margin-bottom: 0px;
     }
 }
+

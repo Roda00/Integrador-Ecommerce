@@ -18,11 +18,11 @@ export default function Register({sendRegister}) {
 
   
   return (
-    <main>
-  <h1>Registrarme</h1>
+    <main className='main-register'>
+  <h1 className='h1-register'>Registrarme</h1>
   <div className="border-bottom-cont" />
   <div className="form-cont-register">
-    <form action="" onSubmit={handleSubmit(onSubmit)}>
+    <form className='form-register' action="" onSubmit={handleSubmit(onSubmit)}>
       <label htmlFor="nombre">Nombre completo</label>
       <input
         {...register("nombrecompleto", {required: "Ingresa un nombre de usuario"})}

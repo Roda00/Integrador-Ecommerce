@@ -5,13 +5,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 export default function Admin_products() {
+
+
+
     return (
         <main>
             <h1>Administrador de productos</h1>
             <div className="border-bottom-cont" />
             <div className="tables-container">
                 <div className="table-container">
-                    <table>
+                    <table className='table-admin'>
                         <tbody>
                             <tr>
                                 <th>Imagen</th>
@@ -31,9 +34,16 @@ export default function Admin_products() {
                                 </td>
                                 <td className="name-cell">Bosendorfer Grand 200</td>
                                 <td className="description-cell">
-                                    Uno de los modelos mas populares de la gran familia de pianos
-                                    Bosendorfer, el Bösendorfer 200 VC Su tamaño compacto significa un
-                                    elemento ideal para salones de medianos.
+                                    Durante más de medio siglo, este Bösendorfer Grand ha sido uno de
+                                    nuestros modelos más populares. Su sonido y dinámica se despliegan sin
+                                    esfuerzo tanto en un concierto como en tu sala de estar. La excelente
+                                    acción proporciona una controlabilidad sensible y traduce la intención
+                                    del artista en una expresión enérgica.
+                                    Los matices musicales más finos, los bajos sonoros cálidos y el juego
+                                    de colores brillantes resuenan en mundos sonoros atemporales creados
+                                    por el artista. El público se sumerge en este universo, reflexionando
+                                    alegremente sobre la gran variedad de interpretaciones y géneros que
+                                    se escuchan. momento de pura inspiración.
                                 </td>
                                 <td className="price-cell">$34.000.000</td>
                                 <td className="tools-cell">
@@ -117,7 +127,7 @@ export default function Admin_products() {
                             </tr>
                         </tbody>
                     </table>
-                    <table>
+                    <table className='table-admin'>
                         <tbody>
                             <tr>
                                 <th>Imagen</th>

@@ -10,6 +10,8 @@ import Register from './Pages/Register/Register'
 import Admin from './Pages/Admin/Admin-products'
 import axios from 'axios'
 import { use, useEffect, useState } from 'react'
+import Piano from './Pages/Product/Piano-product'
+import Pianos_list from './Components/Pianos-list/Pianos-list'
 
 
 function App() {
@@ -32,6 +34,8 @@ function App() {
       const response = await axios.get(`${URL}/Pianos`)
 
       setPianos(response.data)
+
+
 
     } catch (error) {
       console.log(error)
@@ -61,6 +65,8 @@ function App() {
           <Route path="/About-us" element={      <Acerca_de_nosotros />    } />
           <Route path="/Register" element={      <Register sendRegister={sendRegister} />    } />
           <Route path="/Admin-products" element={      <Admin />    } />
+          <Route path="/Piano-product/:id" element={      <Piano pianos={pianos}/>    } />
+          {/* <Route path="/Pianos-list" element={      <Pianos_list pianos={pianos}/>    } /> */}
         </Routes>
       <Footer />
       </BrowserRouter>

@@ -13,11 +13,11 @@
     --background-color: rgb(223, 223, 223);
     --hover-color: #cca43b;
 }
-main {
+.main-register {
     padding-top: 70px;
 }
 
-h1 {
+.h1-register {
     text-align: center;
     margin: 20px;
     font-weight: 300;
@@ -52,7 +52,7 @@ h1 {
         }
     }
 
-    form {
+    .form.register {
         display: flex;
         align-items: center;
         flex-direction: column;
@@ -61,7 +61,7 @@ h1 {
             margin-bottom: 40px;
         }
 
-        label {
+        .label-register {
             align-self: flex-start;
             margin: 20px 0px 20px 0px;
         }
@@ -102,7 +102,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 @media screen and (width <=767px) {
 
-    .form-cont {
+    .form-cont-register {
         width: 100%;
     }
 }
