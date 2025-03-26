@@ -1,0 +1,176 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.288);
+    /* Fondo oscuro */
+    z-index: 999;
+}
+.product-color {
+    margin-bottom: 20px;
+
+    img {
+            margin-left: 10px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+    
+    }
+
+
+
+
+.order-modal-cont {
+    position: fixed;
+    background-color: white;
+    width: 400px;
+    right: 0;
+    top: 70px;
+    z-index: 1000;
+    max-height: 60vh;
+    overflow-y: auto;
+    transform: translateX(100%);
+    animation: fadeIn .5s ease-in-out forwards;
+
+
+    .md-link {
+
+        margin: 20px 0px 20px 15px;
+
+        .link {
+
+            color: #000;
+            &:hover {
+                color: var(--hover-color);
+            }
+        }
+    }
+
+    .md-subtotal-cont {
+
+        
+    border-bottom: 1px solid #e0e0e0;
+
+    p {
+        margin: 20px 0px 20px 15px;
+    }
+
+        display: flex;
+        gap: 10px;
+        
+        p + p {
+            font-weight: 600;
+        }
+    }
+
+    .modal-title {
+
+        display: block;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid #e0e0e0;
+        margin-bottom: 10px;
+
+        h2 {
+            margin: 10px 0px;
+            text-align: center;
+            font-size: 35px;
+            font-weight: 100;
+        }
+    }
+
+    .modal-cont-container {
+        margin: 5px 0px 0px 5px;
+        display: flex;
+        flex-direction: column;
+
+
+
+        .md-cont {
+
+            display: flex;
+            align-items: start;
+            border-bottom: 1px solid #e0e0e0;
+
+
+            .md-title-cont {
+                display: flex;
+            
+                h3 {
+                    font-size: 18px;
+                    margin-left: 10px;
+                    font-weight: 100;
+                    text-align: start;
+            
+                }
+            
+                
+                
+            }
+
+            .md-flex {
+
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+
+                .md-quantity-cont {
+                    margin-left: 10px;
+            
+                    p {
+            
+                        color: #b1b1b1;
+                    }
+                }
+                
+                .md-total-cont {
+                    margin-left: 10px;
+                }
+
+
+            }
+
+
+            .md-img-cont {
+
+
+                img {
+                    height: 100%;
+                    width: 100px;
+
+                }
+            }
+
+
+        }
+    }
+}
+
+@keyframes fadeIn {
+
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@media screen and (width <=767px) {
+
+
+
+
+    .order-modal-cont {
+        width: 100%;
+        top: 40px;
+
+    }
+}

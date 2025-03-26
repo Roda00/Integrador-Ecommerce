@@ -233,7 +233,8 @@ h2 {
                 height: 100px;
                 background-color: var(--background-color);
 
-                a {
+                .buy-button {
+                    cursor: pointer;
                     margin-left: 35px;
                     text-decoration: none;
                     color: inherit;
@@ -315,8 +316,33 @@ h2 {
     }
 }
 
+.piano-product-colors-container {
+    display: flex;
+    width: 100%;
+    
+    height: 15%;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 10px;
+
+
+        img {
+            width: 15%;
+            cursor: pointer;
+            border: 5px solid transparent;
+            border-radius: 50%;
+            &:hover {
+
+                border: 3px solid var(--hover-color) ;
+            }
+        }
+}
+img.active {
+    border: 3px solid var(--hover-color) ;
+}
 
 @media screen and (width <=767px) {
+
 
     #img-1 {
         display: none;

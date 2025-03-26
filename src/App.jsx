@@ -12,7 +12,8 @@ import axios from 'axios'
 import { use, useEffect, useState } from 'react'
 import Piano from './Pages/Product/Piano-product'
 import Pianos_list from './Components/Pianos-list/Pianos-list'
-
+import Order from './Pages/Order/Order'
+import OrderModal from './Components/orderModal/OrderModal'
 
 function App() {
 
@@ -59,6 +60,7 @@ function App() {
     <>
       <BrowserRouter>
       <Header />
+      <OrderModal/>
         <Routes>
           <Route path="/" element={<Index pianos={pianos}/>} />
           <Route path="/Contacto" element={      <Contacto />    } />
@@ -66,7 +68,7 @@ function App() {
           <Route path="/Register" element={      <Register sendRegister={sendRegister} />    } />
           <Route path="/Admin-products" element={      <Admin />    } />
           <Route path="/Piano-product/:id" element={      <Piano pianos={pianos}/>    } />
-          {/* <Route path="/Pianos-list" element={      <Pianos_list pianos={pianos}/>    } /> */}
+          <Route path="/Cart" element={      <Order  />    }/>
         </Routes>
       <Footer />
       </BrowserRouter>

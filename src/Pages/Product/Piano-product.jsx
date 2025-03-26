@@ -2,19 +2,23 @@ import React, { useEffect, useState } from 'react'
 import '../css/product-detail.css'
 import { useParams } from 'react-router'
 import axios from 'axios'
+import { useOrder } from '../../Components/context/OrderContext'
+import Swal from 'sweetalert2'
 
 const URL = `https://67daa41535c87309f52d63af.mockapi.io`
 
-export default function Piano_product( ) {
+export default function Piano_product() {
 
-  const [selectedColor, setSelectedColor] = useState(null)
-    const [product, setProduct] = useState(null)
-    const { id } = useParams()
+  const [product, setProduct] = useState(null)
+  const { id } = useParams()
+
+  const [selectedColor, setSelectedColor] = useState({})
+
+  const { addCart } = useOrder()
 
 
-
-    useEffect(() => {
-      async function getPiano() {
+  useEffect(() => {
+    async function getPiano() {
 
       try {
         const response = await axios.get(`${URL}/Pianos/${id}`)
@@ -27,16 +31,16 @@ export default function Piano_product( ) {
 
     getPiano()
 
-    }, []) 
+  }, [])
 
-    if(!product) {
-      return <h1>Cargando...</h1>
-    }
+  if (!product) {
+    return <h1>Cargando...</h1>
+  }
 
 
-    const descripcion = product.descripcion.split('||')
+  const descripcion = product.descripcion.split('||')
 
-    const productPrecio = product.precio.toLocaleString("es-AR")
+  const productPrecio = product.precio.toLocaleString("es-AR")
 
   return (
     <main>
@@ -74,27 +78,38 @@ export default function Piano_product( ) {
             </p>
             {descripcion[1] && (
               <>
-              <div className="border-bottom-cont" />
-              <p className="piano-description">
-                {descripcion[1]}
-              </p>
+                <div className="border-bottom-cont" />
+                <p className="piano-description">
+                  {descripcion[1]}
+                </p>
               </>
 
-            )} 
-            
+            )}
+
             <div className="border-bottom-cont" />
             <h2>Colores disponibles</h2>
             <div className="piano-colors-container">
-              <img src={product.color1} alt="" className={`${selectedColor === "color1" ? "active" : ""}`} 
-            onClick={() => setSelectedColor("color1")}/>
-            {product.color2 && (
-              <img src={product.color2} alt="" className={`${selectedColor === "color2" ? "active" : ""}`} 
-            onClick={() => setSelectedColor("color2")}/>
+              <img src={product.color1} alt="" className={selectedColor[product.id] === "color1" ? "active" : ""}
+                onClick={() => setSelectedColor({ ...selectedColor, [product.id]: "color1" })} />
+              {product.color2 && (
+                <img src={product.color2} alt="" className={selectedColor[product.id] === "color2" ? "active" : ""}
+                  onClick={() => setSelectedColor({ ...selectedColor, [product.id]: "color2" })} />
 
-            )}
+              )}
             </div>
-            <div className="buy-button">
-              <a href="">Comprar</a>
+            <div className="buy-button-cont">
+              <button
+                className="buy-button"
+                onClick={() => {
+                  if (!selectedColor[product.id]) {
+                    Swal.fire("Debe seleccionar un color");
+                  } else {
+                    addCart(product, product[selectedColor[product.id]]);
+                  }
+                }}
+              >
+                Comprar
+              </button>
             </div>
           </div>
         </div>

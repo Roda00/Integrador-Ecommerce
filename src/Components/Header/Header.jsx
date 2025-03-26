@@ -1,11 +1,17 @@
-import React from 'react'
+
 import './Header.css'
 import { NavLink } from 'react-router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping, faUser } from '@fortawesome/free-solid-svg-icons'
+import { useOrder } from '../context/OrderContext'
 
 
 export default function Header() {
+
+    const {count, toggleCart} = useOrder()
+
+    
+    
     return (
         <header>
             <nav>
@@ -56,7 +62,10 @@ export default function Header() {
                     </div>
                     <div className="section-user">
                         <div className="shopping-cart">
+                            <a className='user-cart' onClick={() => toggleCart()}>
                             <FontAwesomeIcon icon={faCartShopping} />
+                            {count > 0 && <span className="cart-count">{count}</span>}
+                            </a>
                         </div>
                         <div className="user-icon">
                             <FontAwesomeIcon icon={faUser} />
