@@ -10,7 +10,10 @@ export default function Register({sendRegister}) {
 
   const password = watch("password")
 
-  const onSubmit = (data) => {sendRegister(data); reset();
+
+
+  const onSubmit = (data) => {const {password, passwordConfirm, ...cleanData} = data; reset();
+  sendRegister(cleanData)
     Swal.fire({
       icon: "success",
       title: "Has sido registrado",

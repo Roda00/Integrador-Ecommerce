@@ -238,6 +238,7 @@ h2 {
                     margin-left: 35px;
                     text-decoration: none;
                     color: inherit;
+                    border: none;
                     background-color: var(--primary-color);
                     padding: 15px 25px;
                     color: white;

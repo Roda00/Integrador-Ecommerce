@@ -1,10 +1,12 @@
 import React from 'react'
 import './Order.css'
 import { useOrder } from '../../Components/context/OrderContext'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMinus, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 export default function Order() {
 
-  const { count, total, cart } = useOrder()
+  const { count, total, cart, disminuirCantidad, aumentarCantidad } = useOrder()
 
   const precio = total.toLocaleString("es-AR")
 
@@ -22,11 +24,16 @@ export default function Order() {
             <div className="product-title">
               <h2>{item.nombre}</h2>
             </div>
-            <div className="quantity">
-              <p>{item.quantity}</p>
-            </div>
-            <div className="product-color">
-                <img src={item.selectedColor} alt="" />
+            <div className="order-bottom-cont">
+              <img src={item.selectedColor} alt="" />
+              <button>
+                <FontAwesomeIcon onClick={() => disminuirCantidad(item, item.selectedColor)} className={`md-count ${item.quantity === 1 ? "false" : "active"}`} icon={faMinus} />
+                <FontAwesomeIcon onClick={() => disminuirCantidad(item, item.selectedColor)} className={`md-count ${item.quantity === 1 ? "active" : "false"}`} icon={faTrash} />
+              </button>
+              <p>[{item.quantity}]</p>
+              <button>
+                <FontAwesomeIcon onClick={() => aumentarCantidad(item, item.selectedColor)} className="md-count" icon={faPlus} />
+              </button>
             </div>
           </div>
           <div className="price-cont">

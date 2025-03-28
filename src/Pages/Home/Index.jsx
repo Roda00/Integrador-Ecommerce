@@ -110,7 +110,18 @@ export default function Index({ pianos }) {
                                 )}
                             </div>
                             <div className="comprar-button-container">
-                                <button className='buy-button' onClick={() => addCart(piano, piano[selectedColor[piano.id]])}>Comprar</button>
+                                <button
+                                    className="buy-button"
+                                    onClick={() => {
+                                        if (!selectedColor[piano.id]) {
+                                            Swal.fire("Debe seleccionar un color");
+                                        } else {
+                                            addCart(piano, piano[selectedColor[piano.id]]);
+                                        }
+                                    }}
+                                >
+                                    Comprar
+                                </button>
                                 <p>${piano.precio}</p>
                             </div>
                         </div>

@@ -14,6 +14,22 @@ function OrderProvider({ children }) {
     const [count, setCount] = useState(0); // cantidad de productos en el carrito
 
 
+    useEffect(() => {
+        if (cart.length === 0) {
+            localStorage.removeItem("cart");
+        } else {
+            localStorage.setItem("cart", JSON.stringify(cart));
+        }
+    }, [cart]);
+
+    useEffect(() => {
+        const cartLocalStorage = JSON.parse(localStorage.getItem("cart"))
+        if (cartLocalStorage) {
+            setCart(cartLocalStorage)
+        }
+    }, [])
+
+
 
     useEffect(() => {
 
@@ -24,15 +40,12 @@ function OrderProvider({ children }) {
 
             contador += item.quantity;
             total += item.precio * item.quantity;
-            
+
         })
-        
+
 
         setCount(contador);
         setTotal(total);
-        
-        console.log("Carrito actualizado:", cart);
-        console.log("Total actualizado:", total);
 
     }, [cart])
 
@@ -50,9 +63,9 @@ function OrderProvider({ children }) {
                 ...piano,
                 quantity: 1,
                 selectedColor: color
-                
+
             }
-        
+
             setCart([...cart, newPiano])
 
         } else {
@@ -61,10 +74,28 @@ function OrderProvider({ children }) {
             setCart([...cart])
         }
 
-        console.log("Producto agregado:", piano);
-        console.log("Estado del carrito:", cart);
     }
 
+    function aumentarCantidad(piano, color) {
+
+        const addToCart = cart.find((item) => item.id === piano.id && item.selectedColor === color)
+
+        addToCart.quantity += 1
+        setCart([...cart])
+
+    }
+    function disminuirCantidad(piano, color) {
+
+        const addToCart = cart.find((item) => item.id === piano.id && item.selectedColor === color)
+
+        console.log("Cantidad actual:", addToCart)
+
+        if (addToCart.quantity <= 1) { cart.splice(0, 1) } else {
+            addToCart.quantity -= 1
+        }
+        setCart([...cart])
+
+    }
 
     return (
         <OrderContext.Provider
@@ -74,7 +105,10 @@ function OrderProvider({ children }) {
                 isOpen,
                 toggleCart,
                 addCart,
-                count
+                count,
+                aumentarCantidad,
+                disminuirCantidad
+
             }}
         >
             {children}
