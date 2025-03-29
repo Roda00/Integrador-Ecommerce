@@ -55,6 +55,41 @@ function App() {
       console.log(error)
     }
   }
+  async function sendForm(data) {
+
+    try {
+      const send = await axios.post(`${URL}/Pianos`, data )
+      getPianos()
+      console.log(send)
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async function editForm(data) {
+
+    try {
+      const send = await axios.put(`${URL}/Pianos/${data.id}`, data )
+      getPianos()
+
+    } catch (error) {
+      console.log(error)
+
+    }
+  }
+  async function deleteProduct(data) {
+
+    try {
+      const send = await axios.delete(`${URL}/Pianos/${data.id}`)
+      
+      getPianos()
+
+    } catch (error) {
+      console.log(error)
+
+    }
+  }
 
   return (
     <>
@@ -66,8 +101,8 @@ function App() {
           <Route path="/Contacto" element={      <Contacto />    } />
           <Route path="/About-us" element={      <Acerca_de_nosotros />    } />
           <Route path="/Register" element={      <Register sendRegister={sendRegister} />    } />
-          <Route path="/Admin-products" element={      <Admin />    } />
-          <Route path="/Piano-product/:id" element={      <Piano pianos={pianos}/>    } />
+          <Route path="/Admin-products" element={      <Admin pianos={pianos} sendForm={sendForm} editForm={editForm}  deleteProduct={deleteProduct}  />    } />
+          <Route path="/Piano-product/:id" element={      <Piano pianos={pianos}/>   } />
           <Route path="/Cart" element={      <Order  />    }/>
         </Routes>
       <Footer />

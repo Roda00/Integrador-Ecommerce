@@ -7,7 +7,7 @@ h1 {
     font-size: 3rem;
     text-align: center;
     font-weight: 300;
-    
+
 }
 
 
@@ -22,71 +22,171 @@ h1 {
 .tables-container {
     display: flex;
     justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+
 }
 
 .table-container {
-    width: 60%; 
-    margin-top: 50px;
-    
+    width: 60%;
+    margin-bottom: 50px;
 
-        .table-admin {
-            border: 1px solid black;
-            border-collapse: collapse;
-            margin: 50px 0px;
-            
-            td, th, tr {
-                padding: 10px;
+    .table-admin {
+        border: 1px solid black;
+        border-collapse: collapse;
+
+        td,
+        th,
+        tr {
+            padding: 10px;
+        }
+
+        td {
+            border-bottom: 1px solid black;
+
+        }
+
+        td,
+        th {
+            border-right: 1px solid black;
+        }
+
+        th {
+            border-bottom: 1px solid black;
+            background-color: #302f4d;
+            color: white;
+
+        }
+
+        tr {
+
+            &:nth-child(even) {
+                background-color: rgb(228, 228, 228);
             }
+        }
 
-            td {
-                border-bottom: 1px solid black;
+        .image-cell {
 
+            img {
+                width: 100px;
             }
-
-            td, th {
-                border-right: 1px solid black;
-            }
-
-            th {
-                border-bottom: 1px solid black;
-                background-color: #302f4d;
-                color: white;
-                
-            }
-
-            tr {
-                
-                &:nth-child(even) {
-                    background-color: rgb(198, 198, 198);
-                }
-            }
-
-            .image-cell {
-                
-                img {
-                    width: 100px;
-                }
-            }
+        }
 
         .tools-cell {
             width: 100px;
-            i {
-                margin: 10px 10px;
+            text-align: center;
+            border: 1px solid black;
 
+            button {
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-size: 1.2rem;
+                margin: 0px 10px;
             }
-                
+
             #borrar-icono {
                 color: red;
+                
             }
 
             #editar-icono {
-                color: #120d31;
+                color: #120d31; 
             }
         }
     }
 }
 
-@media screen and (width <=767px) { 
+.form-agregar-productos {
+    width: 500px;
+    border: 1px solid black;
+    padding: 20px;
+    
+    p {
+        font-size: 1.3rem;
+        font-weight: 400;
+        margin-bottom: 30px;
+    }
+
+    #submit {
+        align-self: center;
+        margin: 40px;
+        padding: 20px;
+        width: 50%;
+        background-color: var(--primary-color);
+        color: white;
+        font-weight: 100;
+        font-size: 20px;
+        border: none;
+        cursor: pointer;
+        transition: color .2s ease-in-out;
+        border-radius: 5px;
+
+        &:hover {
+            color: var(--hover-color)
+        }
+
+        &:focus {
+            background-color: var(--secundary-color);
+        }
+    }
+
+    .form-product {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
+        textarea {
+
+            width: 100%;
+            max-width: 100%;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: none;
+            border-radius: 2px;
+            background: rgb(122, 122, 122);
+            background: linear-gradient(90deg, rgba(122, 122, 122, 0) 86%, rgba(2, 0, 36, 1) 100%);
+
+            &:hover {
+                background: rgb(122, 122, 122);
+                background: linear-gradient(90deg, rgba(122, 122, 122, 0) 86%, rgba(204, 164, 59, 1) 100%);
+            }
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 20px;
+
+
+        }
+
+        label+input {
+            margin-bottom: 30px;
+            position: relative;
+            border: none;
+            border-bottom: 1px solid var(--primary-color);
+            background: rgb(122, 122, 122);
+            background: linear-gradient(90deg, rgba(122, 122, 122, 0) 86%, rgba(2, 0, 36, 1) 100%);
+            border-radius: 2px;
+
+            &:hover {
+                background: rgb(122, 122, 122);
+                background: linear-gradient(90deg, rgba(122, 122, 122, 0) 86%, rgba(204, 164, 59, 1) 100%);
+            }
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+}
+
+@media screen and (width <=767px) {
 
     .table-container {
         width: 100%;
@@ -96,7 +196,7 @@ h1 {
 
 
 
-        
+
         .description-cell {
             display: -webkit-box;
             -webkit-line-clamp: 5;
@@ -105,11 +205,15 @@ h1 {
             text-overflow: ellipsis;
         }
     }
+    a {
+        text-decoration: none;
+    }
+    .tables-container {
+        flex-direction: column;
+    }
+    
+
 
 }
 
-
-a {
-    text-decoration: none;
-}
 

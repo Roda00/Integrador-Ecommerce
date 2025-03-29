@@ -15,19 +15,23 @@ function OrderProvider({ children }) {
 
 
     useEffect(() => {
-        if (cart.length === 0) {
-            localStorage.removeItem("cart");
-        } else {
-            localStorage.setItem("cart", JSON.stringify(cart));
-        }
-    }, [cart]);
-
-    useEffect(() => {
         const cartLocalStorage = JSON.parse(localStorage.getItem("cart"))
         if (cartLocalStorage) {
             setCart(cartLocalStorage)
         }
     }, [])
+
+
+    
+    useEffect(() => {
+        if (cart.length > 0) {
+            localStorage.setItem("cart", JSON.stringify(cart));
+        } else {
+            localStorage.removeItem("cart")
+        }
+
+    }, [cart]);
+
 
 
 

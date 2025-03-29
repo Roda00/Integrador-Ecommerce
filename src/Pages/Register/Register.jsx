@@ -13,6 +13,7 @@ export default function Register({sendRegister}) {
 
 
   const onSubmit = (data) => {const {password, passwordConfirm, ...cleanData} = data; reset();
+    
   sendRegister(cleanData)
     Swal.fire({
       icon: "success",

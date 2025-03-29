@@ -1,10 +1,177 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import '../css/administrador.css'
 import '../css/styles.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import axios from 'axios'
+import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { useForm } from 'react-hook-form'
+import Swal from 'sweetalert2'
 
 
-export default function Admin_products() {
+export default function Admin_products({ pianos, sendForm, editForm, deleteProduct }) {
+
+
+    const { register, handleSubmit, reset, setValue } = useForm();
+
+    const [productoEditado, setProductoEditado] = useState(null)
+
+    const pianosDeCola = pianos.filter((piano) =>
+
+        piano.categoria === "Piano de cola"
+
+    )
+
+
+    const pianosVerticales = pianos.filter((piano) =>
+
+        piano.categoria === "Piano vertical"
+
+    )
+
+
+    function seleccionarProducto(producto) {
+        setProductoEditado(producto)
+    }
+
+    function pintarTablePianosDeCola() {
+
+        return pianosDeCola.map((pianos) => {
+
+            return (
+
+                <tr>
+                    <td className="image-cell">
+                        <img
+                            src={pianos.image}
+                            alt=""
+                        />
+                    </td>
+                    <td className="name-cell">{pianos.nombre}</td>
+                    <td className="description-cell">
+                        {pianos.descripcion.split('||')}
+                    </td>
+                    <td className="price-cell">{pianos.precio.toLocaleString("es-AR")}</td>
+                    <td className="tools-cell">
+                        <button onClick={() => seleccionarProducto(pianos)}>
+                            <FontAwesomeIcon icon={faPen} id="editar-icono" />
+                        </button>
+                        <button onClick={() => handleDeleteProduct(pianos)}>
+                            <FontAwesomeIcon icon={faTrash} id="borrar-icono" />
+                        </button>
+                    </td>
+                </tr>
+
+            )
+
+
+
+
+        })
+    }
+    function pintarTablePianosVerticales() {
+
+        return pianosVerticales.map((pianos) => {
+
+            return (
+
+                <tr>
+                    <td className="image-cell">
+                        <img
+                            src={pianos.image}
+                            alt=""
+                        />
+                    </td>
+                    <td className="name-cell">{pianos.nombre}</td>
+                    <td className="description-cell">
+                        {pianos.descripcion.split('||')}
+                    </td>
+                    <td className="price-cell">{pianos.precio.toLocaleString("es-AR")}</td>
+                    <td className="tools-cell">
+                        <button onClick={() => seleccionarProducto(pianos)}>
+                            <FontAwesomeIcon icon={faPen} id="editar-icono" />
+                        </button>
+                        <button onClick={() => handleDeleteProduct(pianos)}>
+                            <FontAwesomeIcon icon={faTrash} id="borrar-icono" />
+                        </button>
+                    </td>
+                </tr>
+
+            )
+
+
+
+
+        })
+    }
+
+
+    function handleDeleteProduct(pianos) {
+
+        Swal.fire({
+            title: "¿Estas seguro de eliminar este producto?",
+            icon: "warning",
+            showCancelButton: true,
+            cancelButtonText: "Cancelar",
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, seguro"
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire({
+                title: "Borrado!",
+                text: "El piano a sido eliminado",
+                icon: "success"
+            });
+            deleteProduct(pianos)
+            }
+          });
+
+    }
+
+    useEffect(() => {
+
+        if (productoEditado) {
+
+
+            setValue('nombre', productoEditado.nombre)
+            setValue('image', productoEditado.image)
+            setValue('image2', productoEditado.image2)
+            setValue('descripcion', productoEditado.descripcion)
+            setValue('precio', productoEditado.precio)
+            setValue('color1', productoEditado.color1)
+            setValue('color2', productoEditado.color2)
+            setValue('categoria', productoEditado.categoria)
+
+        }
+
+
+
+    }, [productoEditado])
+
+    const onSubmit = (data) => {
+        if (productoEditado) {
+            data.id = productoEditado.id
+            editForm(data)
+            Swal.fire({
+                icon: 'success',
+                title: 'Producto editado correctamente',
+                showConfirmButton: false,
+                timer: 1500
+            }); } else {
+                sendForm(data)
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Producto agregado correctamente',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+
+            setProductoEditado(null);
+        reset();
+
+    }
+
 
 
 
@@ -13,6 +180,54 @@ export default function Admin_products() {
             <h1>Administrador de productos</h1>
             <div className="border-bottom-cont" />
             <div className="tables-container">
+                <div className="form-agregar-productos" onSubmit={handleSubmit(onSubmit)}>
+                    <form className='form-product' action="">
+                        <p>Agregar pianos</p>
+                        <label htmlFor="">Nombre</label>
+                        <input {...register('nombre', { required: "Ingresa el nombre del producto" })}
+                            type="text"
+                            placeholder='Nombre del producto'
+                        />
+                        <label htmlFor="">Imagen principal</label>
+                        <input {...register('image', { required: "Ingresa la URL de la imagen principal" })}
+                            type='text'
+                            placeholder='URL de la imagen'
+                        />
+                        <label htmlFor="">Imagen secundaria</label>
+                        <input {...register('image2', { required: "Ingresa la URL de la imagen secundaria" })}
+                            type="text"
+                            placeholder='URL de la imagen'
+                        />
+                        <label htmlFor="">Descrpción</label>
+                        <textarea {...register('descripcion', { required: "Ingresa la descripción del producto" })}
+                            placeholder='Descripción del producto'
+                        />
+                        <label htmlFor="">Precio</label>
+                        <input {...register('precio', { required: "Ingresa el precio del producto" })}
+                            type="number"
+                            placeholder='Precio del producto'
+                            id='precio'
+                        />
+                        <label htmlFor="">Color primario</label>
+                        <input {...register('color1', { required: "Ingresa el link del color primario" })}
+                            type="text"
+                            placeholder='Url del color primario'
+                        />
+                        <label htmlFor="">Color secundario</label>
+                        <input {...register('color2')}
+                            type="text"
+                            placeholder='Url del color secundario'
+                        />
+                        <label htmlFor="">Categoria</label>
+                        <select {...register('categoria', { required: "Ingresa la categoria del piano" })}>
+                            <option value="Piano de cola">Piano de cola</option>
+                            <option value="Piano vertical">Piano vertical</option>
+                        </select>
+                        <button id='submit' type='submit'>
+                            {productoEditado ? "Editar producto" : "Agregar producto"}
+                        </button>
+                    </form>
+                </div>
                 <div className="table-container">
                     <table className='table-admin'>
                         <tbody>
@@ -25,106 +240,7 @@ export default function Admin_products() {
                             </tr>
                         </tbody>
                         <tbody>
-                            <tr>
-                                <td className="image-cell">
-                                    <img
-                                        src="https://www.themeandvariations.com.au/pages/wp-content/uploads/2023/08/bose_200_1989.png"
-                                        alt=""
-                                    />
-                                </td>
-                                <td className="name-cell">Bosendorfer Grand 200</td>
-                                <td className="description-cell">
-                                    Durante más de medio siglo, este Bösendorfer Grand ha sido uno de
-                                    nuestros modelos más populares. Su sonido y dinámica se despliegan sin
-                                    esfuerzo tanto en un concierto como en tu sala de estar. La excelente
-                                    acción proporciona una controlabilidad sensible y traduce la intención
-                                    del artista en una expresión enérgica.
-                                    Los matices musicales más finos, los bajos sonoros cálidos y el juego
-                                    de colores brillantes resuenan en mundos sonoros atemporales creados
-                                    por el artista. El público se sumerge en este universo, reflexionando
-                                    alegremente sobre la gran variedad de interpretaciones y géneros que
-                                    se escuchan. momento de pura inspiración.
-                                </td>
-                                <td className="price-cell">$34.000.000</td>
-                                <td className="tools-cell">
-                                    <a href="">
-                                        <i id="editar-icono" className="fa-solid fa-pen" />
-                                    </a>
-                                    <a href="">
-                                        <i id="borrar-icono" className="fa-solid fa-trash" />
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="image-cell">
-                                    <img
-                                        src="https://www.thepianoshopbath.co.uk/wp-content/uploads/2018/01/KawaiGL10.jpg"
-                                        alt=""
-                                    />
-                                </td>
-                                <td className="name-cell">Kawai GL10</td>
-                                <td className="description-cell">
-                                    Piano acústico de 1/4 cola de 88 notas. resistente aluminio
-                                    extruido, y cuenta con el diseño innovador de KAWAI de doble barra
-                                    que ofrece mayor solidez y estabilidad.
-                                </td>
-                                <td className="price-cell">$27.000.000</td>
-                                <td className="tools-cell">
-                                    <a href="">
-                                        <i id="editar-icono" className="fa-solid fa-pen" />
-                                    </a>
-                                    <a href="">
-                                        <i id="borrar-icono" className="fa-solid fa-trash" />
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="image-cell">
-                                    <img
-                                        src="https://http2.mlstatic.com/D_NQ_NP_985308-MLA41210702971_032020-O.webp"
-                                        alt=""
-                                    />
-                                </td>
-                                <td className="name-cell">Yamaha Gb1</td>
-                                <td className="description-cell">
-                                    El GB1K es el piano de cola más compacto de Yamaha. Sin embargo,
-                                    aunque su tamaño sea reducido, ofrece un tono resonante y una
-                                    delicada facilidad para tocar, siendo mucho más accesible.
-                                </td>
-                                <td className="price-cell">$13.000.000</td>
-                                <td className="tools-cell">
-                                    <a href="">
-                                        <i id="editar-icono" className="fa-solid fa-pen" />
-                                    </a>
-                                    <a href="">
-                                        <i id="borrar-icono" className="fa-solid fa-trash" />
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="image-cell">
-                                    <img
-                                        src="https://www.themeandvariations.com.au/pages/wp-content/uploads/2023/08/bose_200_1989.png"
-                                        alt=""
-                                    />
-                                </td>
-                                <td className="name-cell">Steinway &amp; Sons A</td>
-                                <td className="description-cell">
-                                    Midiendo 6 pies 2 pulgadas (188 cm), el Modelo A es conocido por
-                                    proporcionar un “gran” sonido en un instrumento de escala media.
-                                    Este piano de cola ofrece poder y calidez, con un diseño que
-                                    permite que la tabla armónica resuene libre y eficientemente.
-                                </td>
-                                <td>$60.000.000</td>
-                                <td className="tools-cell">
-                                    <a href="">
-                                        <i id="editar-icono" className="fa-solid fa-pen" />
-                                    </a>
-                                    <a href="">
-                                        <i id="borrar-icono" className="fa-solid fa-trash" />
-                                    </a>
-                                </td>
-                            </tr>
+                            {pintarTablePianosDeCola()}
                         </tbody>
                     </table>
                     <table className='table-admin'>
@@ -138,108 +254,7 @@ export default function Admin_products() {
                             </tr>
                         </tbody>
                         <tbody>
-                            <tr>
-                                <td className="image-cell">
-                                    <img
-                                        src="https://www.coachhousepianos.co.uk/wp-content/uploads/2022/07/bosendorfer_model_120_cl_1_20120614_14258756151.jpg"
-                                        alt=""
-                                    />
-                                </td>
-                                <td className="name-cell">Bosendorfer 120</td>
-                                <td className="description-cell">
-                                    Bösendorfer Grand Upright 120 se adapta a todas las habitaciones y
-                                    da rienda suelta a los voluminosos tonos Bösendorfer. Eliminando
-                                    cualquier obstáculo a la expresión artística y la articulación,
-                                    Bösendorfer ha diseñado una acción con teclas más largas para
-                                    optimizar el manejo y el tacto.
-                                </td>
-                                <td className="price-cell">$26.000.000</td>
-                                <td className="tools-cell">
-                                    <a href="">
-                                        <i id="editar-icono" className="fa-solid fa-pen" />
-                                    </a>
-                                    <a href="">
-                                        <i id="borrar-icono" className="fa-solid fa-trash" />
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="image-cell">
-                                    <img
-                                        src="https://pianospuch.com.ar/wp-content/uploads/2020/10/KAWAI-ND21.png"
-                                        alt=""
-                                    />
-                                </td>
-                                <td className="name-cell">Kawai Nd-21</td>
-                                <td className="description-cell">
-                                    El piano vertical ND-21 ofrece un valor incomparable con un
-                                    sonido, tacto y durabilidad excepcionales. Además de la tapa
-                                    armónica de abeto macizo, el ND-21 utiliza la exclusiva acción
-                                    ultrasensible de Kawai, que combina la artesanía experimentada con
-                                    nuestra tecnología de piano de renombre mundial.
-                                </td>
-                                <td className="price-cell">$29.000.000</td>
-                                <td className="tools-cell">
-                                    <a href="">
-                                        <i id="editar-icono" className="fa-solid fa-pen" />
-                                    </a>
-                                    <a href="">
-                                        <i id="borrar-icono" className="fa-solid fa-trash" />
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="image-cell">
-                                    <img
-                                        src="https://http2.mlstatic.com/D_NQ_NP_805360-MLA50497163520_062022-O.webp"
-                                        alt=""
-                                    />
-                                </td>
-                                <td className="name-cell">Yamaha U3</td>
-                                <td className="description-cell">
-                                    Con su cálido y sólido sonido, así como su capacidad de toque
-                                    consistentemente estable, la serie U te envuelve y te permite
-                                    sumergirte en el piano desde la primera vez que lo tocas. Este
-                                    modelo personifica el piano vertical de Yamaha y encarna un
-                                    estándar en pianos que ha madurado durante décadas, heredando las
-                                    especificaciones y características fundamentales y manteniendo un
-                                    alto aprecio por parte de pianistas profesionales.
-                                </td>
-                                <td className="price-cell">$23.000.000</td>
-                                <td className="tools-cell">
-                                    <a href="">
-                                        <i id="editar-icono" className="fa-solid fa-pen" />
-                                    </a>
-                                    <a href="">
-                                        <i id="borrar-icono" className="fa-solid fa-trash" />
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="image-cell">
-                                    <img
-                                        src="https://www.tomleemusic.ca/media/catalog/product/cache/6f367da5d9877a0e353f7b78313f76b2/3/4/34100.jpg"
-                                        alt=""
-                                    />
-                                </td>
-                                <td className="name-cell">Steinway &amp; Sons K52</td>
-                                <td className="description-cell">
-                                    Introducido en 1903, este piano cuenta con una tabla armónica más
-                                    grande que muchos pianos de cola, para una voz más resonante. La
-                                    elección de los intérpretes profesionales que buscan un
-                                    instrumento vertical, y perfecto para todo tipo de casas y
-                                    departamentos.
-                                </td>
-                                <td className="price-cell">$32.000.000</td>
-                                <td className="tools-cell">
-                                    <a href="">
-                                        <i id="editar-icono" className="fa-solid fa-pen" />
-                                    </a>
-                                    <a href="">
-                                        <i id="borrar-icono" className="fa-solid fa-trash" />
-                                    </a>
-                                </td>
-                            </tr>
+                            {pintarTablePianosVerticales()}
                         </tbody>
                     </table>
                 </div>
