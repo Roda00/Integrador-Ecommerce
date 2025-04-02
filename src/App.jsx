@@ -14,6 +14,7 @@ import Piano from './Pages/Product/Piano-product'
 import Pianos_list from './Components/Pianos-list/Pianos-list'
 import Order from './Pages/Order/Order'
 import OrderModal from './Components/orderModal/OrderModal'
+import Admin_Users from './Pages/Admin-Users/Admin-Users'
 
 function App() {
 
@@ -21,6 +22,8 @@ function App() {
 
   const [pianos, setPianos] = useState([])
 
+
+  const [userEditado, setUserEditado] = useState(null)
 
 
   useEffect(() => {
@@ -104,6 +107,7 @@ function App() {
           <Route path="/Admin-products" element={      <Admin pianos={pianos} sendForm={sendForm} editForm={editForm}  deleteProduct={deleteProduct}  />    } />
           <Route path="/Piano-product/:id" element={      <Piano pianos={pianos}/>   } />
           <Route path="/Cart" element={      <Order  />    }/>
+          <Route path="/Admin-users" element={      <Admin_Users sendRegister={sendRegister} />    }/>
         </Routes>
       <Footer />
       </BrowserRouter>

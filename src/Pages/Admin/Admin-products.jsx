@@ -115,16 +115,16 @@ export default function Admin_products({ pianos, sendForm, editForm, deleteProdu
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Si, seguro"
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
-              Swal.fire({
-                title: "Borrado!",
-                text: "El piano a sido eliminado",
-                icon: "success"
-            });
-            deleteProduct(pianos)
+                Swal.fire({
+                    title: "Borrado!",
+                    text: "El piano a sido eliminado",
+                    icon: "success"
+                });
+                deleteProduct(pianos)
             }
-          });
+        });
 
     }
 
@@ -157,17 +157,18 @@ export default function Admin_products({ pianos, sendForm, editForm, deleteProdu
                 title: 'Producto editado correctamente',
                 showConfirmButton: false,
                 timer: 1500
-            }); } else {
-                sendForm(data)
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Producto agregado correctamente',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-            }
+            });
+        } else {
+            sendForm(data)
+            Swal.fire({
+                icon: 'success',
+                title: 'Producto agregado correctamente',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
 
-            setProductoEditado(null);
+        setProductoEditado(null);
         reset();
 
     }
@@ -182,50 +183,52 @@ export default function Admin_products({ pianos, sendForm, editForm, deleteProdu
             <div className="tables-container">
                 <div className="form-agregar-productos" onSubmit={handleSubmit(onSubmit)}>
                     <form className='form-product' action="">
-                        <p>Agregar pianos</p>
-                        <label htmlFor="">Nombre</label>
-                        <input {...register('nombre', { required: "Ingresa el nombre del producto" })}
-                            type="text"
-                            placeholder='Nombre del producto'
-                        />
-                        <label htmlFor="">Imagen principal</label>
-                        <input {...register('image', { required: "Ingresa la URL de la imagen principal" })}
-                            type='text'
-                            placeholder='URL de la imagen'
-                        />
-                        <label htmlFor="">Imagen secundaria</label>
-                        <input {...register('image2', { required: "Ingresa la URL de la imagen secundaria" })}
-                            type="text"
-                            placeholder='URL de la imagen'
-                        />
-                        <label htmlFor="">Descrpción</label>
-                        <textarea {...register('descripcion', { required: "Ingresa la descripción del producto" })}
-                            placeholder='Descripción del producto'
-                        />
-                        <label htmlFor="">Precio</label>
-                        <input {...register('precio', { required: "Ingresa el precio del producto" })}
-                            type="number"
-                            placeholder='Precio del producto'
-                            id='precio'
-                        />
-                        <label htmlFor="">Color primario</label>
-                        <input {...register('color1', { required: "Ingresa el link del color primario" })}
-                            type="text"
-                            placeholder='Url del color primario'
-                        />
-                        <label htmlFor="">Color secundario</label>
-                        <input {...register('color2')}
-                            type="text"
-                            placeholder='Url del color secundario'
-                        />
-                        <label htmlFor="">Categoria</label>
-                        <select {...register('categoria', { required: "Ingresa la categoria del piano" })}>
-                            <option value="Piano de cola">Piano de cola</option>
-                            <option value="Piano vertical">Piano vertical</option>
-                        </select>
-                        <button id='submit' type='submit'>
-                            {productoEditado ? "Editar producto" : "Agregar producto"}
-                        </button>
+                        <fieldset>
+                            <legend>Agregar Pianos</legend>
+                            <label htmlFor="">Nombre</label>
+                            <input {...register('nombre', { required: "Ingresa el nombre del producto" })}
+                                type="text"
+                                placeholder='Nombre del producto'
+                            />
+                            <label htmlFor="">Imagen principal</label>
+                            <input {...register('image', { required: "Ingresa la URL de la imagen principal" })}
+                                type='text'
+                                placeholder='URL de la imagen'
+                            />
+                            <label htmlFor="">Imagen secundaria</label>
+                            <input {...register('image2', { required: "Ingresa la URL de la imagen secundaria" })}
+                                type="text"
+                                placeholder='URL de la imagen'
+                            />
+                            <label htmlFor="">Descrpción</label>
+                            <textarea {...register('descripcion', { required: "Ingresa la descripción del producto" })}
+                                placeholder='Descripción del producto'
+                            />
+                            <label htmlFor="">Precio</label>
+                            <input {...register('precio', { required: "Ingresa el precio del producto" })}
+                                type="number"
+                                placeholder='Precio del producto'
+                                id='precio'
+                            />
+                            <label htmlFor="">Color primario</label>
+                            <input {...register('color1', { required: "Ingresa el link del color primario" })}
+                                type="text"
+                                placeholder='Url del color primario'
+                            />
+                            <label htmlFor="">Color secundario</label>
+                            <input {...register('color2')}
+                                type="text"
+                                placeholder='Url del color secundario'
+                            />
+                            <label htmlFor="">Categoria</label>
+                            <select {...register('categoria', { required: "Ingresa la categoria del piano" })}>
+                                <option value="Piano de cola">Piano de cola</option>
+                                <option value="Piano vertical">Piano vertical</option>
+                            </select>
+                            <button id='submit' type='submit'>
+                                {productoEditado ? "Editar producto" : "Agregar producto"}
+                            </button>
+                        </fieldset>
                     </form>
                 </div>
                 <div className="table-container">

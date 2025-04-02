@@ -87,11 +87,11 @@ h1 {
 
             #borrar-icono {
                 color: red;
-                
+
             }
 
             #editar-icono {
-                color: #120d31; 
+                color: #120d31;
             }
         }
     }
@@ -99,9 +99,9 @@ h1 {
 
 .form-agregar-productos {
     width: 500px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     padding: 20px;
-    
+
     p {
         font-size: 1.3rem;
         font-weight: 400;
@@ -135,6 +135,17 @@ h1 {
         display: flex;
         align-items: center;
         flex-direction: column;
+
+        fieldset {
+            padding: 20px;
+            
+            legend {
+                font-size: 1.5rem;
+                font-weight: 300;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+        }
 
         textarea {
 
@@ -188,10 +199,15 @@ h1 {
 
 @media screen and (width <=767px) {
 
+
+
+
     .table-container {
         width: 100%;
         display: flex;
         flex-direction: column;
+        
+
 
 
 
@@ -205,15 +221,54 @@ h1 {
             text-overflow: ellipsis;
         }
     }
+
     a {
         text-decoration: none;
     }
+
     .tables-container {
         flex-direction: column;
+        align-items: center;
     }
-    
+
+
+
+
+    .table-admin {
+
+
+
+        width: 100%;
+
+        tbody {
+            display: flex;
+            flex-direction: column;
+
+
+
+            tr {
+                display: flex;
+                flex-direction: column;
+
+
+            }
+
+            td {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                width: 100% !important;
+
+
+
+            }
+        }
+
+
+
+    }
+
 
 
 }
-
-
