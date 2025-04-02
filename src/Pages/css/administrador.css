@@ -99,8 +99,8 @@ h1 {
 
 .form-agregar-productos {
     width: 500px;
-    /* border: 1px solid black; */
     padding: 20px;
+    display: flex;
 
     p {
         font-size: 1.3rem;
@@ -108,26 +108,33 @@ h1 {
         margin-bottom: 30px;
     }
 
-    #submit {
-        align-self: center;
-        margin: 40px;
-        padding: 20px;
-        width: 50%;
-        background-color: var(--primary-color);
-        color: white;
-        font-weight: 100;
-        font-size: 20px;
-        border: none;
-        cursor: pointer;
-        transition: color .2s ease-in-out;
-        border-radius: 5px;
 
-        &:hover {
-            color: var(--hover-color)
-        }
+    .btn-cont {
 
-        &:focus {
-            background-color: var(--secundary-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        #submit {
+            margin: 40px;
+            padding: 20px;
+            width: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 100;
+            font-size: 20px;
+            border: none;
+            cursor: pointer;
+            transition: color .2s ease-in-out;
+            border-radius: 5px;
+    
+            &:hover {
+                color: var(--hover-color)
+            }
+    
+            &:focus {
+                background-color: var(--secundary-color);
+            }
         }
     }
 
@@ -177,7 +184,7 @@ h1 {
         }
 
         label+input {
-            margin-bottom: 30px;
+            margin-bottom: 10px;
             position: relative;
             border: none;
             border-bottom: 1px solid var(--primary-color);
@@ -195,6 +202,13 @@ h1 {
             }
         }
     }
+}
+
+fieldset .error {
+
+    font-size: 0.9rem ;
+    color: rgba(255, 0, 0, 0.562);
+    font-weight: bold ;
 }
 
 @media screen and (width <=767px) {

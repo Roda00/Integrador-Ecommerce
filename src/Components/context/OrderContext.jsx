@@ -33,7 +33,10 @@ function OrderProvider({ children }) {
     }, [cart]);
 
 
-
+    function vaciarCarrito() {
+        setCart([])
+        localStorage.removeItem("cart")
+    }
 
     useEffect(() => {
 
@@ -111,7 +114,8 @@ function OrderProvider({ children }) {
                 addCart,
                 count,
                 aumentarCantidad,
-                disminuirCantidad
+                disminuirCantidad,
+                vaciarCarrito
 
             }}
         >

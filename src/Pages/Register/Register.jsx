@@ -36,6 +36,8 @@ export default function Register({sendRegister}) {
         type="text"
         id="nombre"
       />
+      {errors.nombrecompleto && <p className='error'>{errors.nombrecompleto.message}</p>}
+
       <label htmlFor="email">Email</label>
       <input
         {...register("email", {required: "Ingresa un email"})}
@@ -44,6 +46,8 @@ export default function Register({sendRegister}) {
         type="email"
         id="email"
       />
+      {errors.email && <p className='error'>{errors.email.message}</p>}
+
       <label htmlFor="contraseña">Contraseña</label>
       <input
         {...register("password", {
@@ -54,7 +58,8 @@ export default function Register({sendRegister}) {
         type="password"
         id="contraseña"
       />
-      {errors.password && <p>{errors.password.message}</p>}
+      {errors.password && <p className='error'>{errors.password.message}</p>}
+
       <label htmlFor="repetir-contraseña">Repetir contraseña</label>
       <input
         {...register("passwordConfirm", {
@@ -66,15 +71,19 @@ export default function Register({sendRegister}) {
         id="repetir-contraseña"
         
       />
-      {errors.passwordConfirm && <p>{errors.passwordConfirm.message}</p>}
+      {errors.passwordConfirm && <p className='error'> {errors.passwordConfirm.message}</p>}
+
+
       <label htmlFor="date">Fecha de nacimiento</label>
       <input
-        {...register("date", {required: true})}
+        {...register("date", {required: "ingresa una fecha de nacimiento válida"})}
         max="2024-10-29"
         placeholder="Fecha de nacimiento"
         type="date"
         id="date"
       />
+      {errors.date && <p className='error'>{errors.date.message}</p>}
+
       <label htmlFor="">Pais de nacimiento</label>
       <select id="pais" {...register("pais", {required: true})}>
         <option value="United States">United States</option>

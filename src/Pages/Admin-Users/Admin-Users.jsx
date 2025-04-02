@@ -1,4 +1,4 @@
-import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faArrowDown, faPen, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './admin-users.css'
 import React, { useEffect, useState } from 'react'
@@ -6,7 +6,7 @@ import axios from 'axios'
 import { get, set, useForm } from 'react-hook-form'
 import Swal from 'sweetalert2'
 
-export default function Admin_Users({sendRegister}) {
+export default function Admin_Users({ sendRegister }) {
 
   const URL = `https://67daa41535c87309f52d63af.mockapi.io`
 
@@ -15,8 +15,15 @@ export default function Admin_Users({sendRegister}) {
   const [users, setUsers] = useState([])
 
   const [usuarioEditado, setUsuarioEditado] = useState(null)
-  
+
   const password = watch("password")
+
+  const scrollToBottom = () => {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: 'smooth'
+    });
+  };
 
   useEffect(() => {
 
@@ -25,20 +32,20 @@ export default function Admin_Users({sendRegister}) {
   }, [])
 
   useEffect(() => {
-  
-          if (usuarioEditado) {
-  
-  
-              setValue('nombrecompleto', usuarioEditado.nombrecompleto)
-              setValue('email', usuarioEditado.email)
-              setValue('pais', usuarioEditado.pais)
-              setValue('date', usuarioEditado.date)
 
-          }
-  
-  
-  
-      }, [usuarioEditado])
+    if (usuarioEditado) {
+
+
+      setValue('nombrecompleto', usuarioEditado.nombrecompleto)
+      setValue('email', usuarioEditado.email)
+      setValue('pais', usuarioEditado.pais)
+      setValue('date', usuarioEditado.date)
+
+    }
+
+
+
+  }, [usuarioEditado])
 
 
   function seleccionarUsuario(user) {
@@ -60,9 +67,10 @@ export default function Admin_Users({sendRegister}) {
 
   }
 
-  const onSubmit = async (data) => {const {password, passwordConfirm, ...cleanData} = data; reset();
+  const onSubmit = async (data) => {
+    const { password, passwordConfirm, ...cleanData } = data; reset();
 
-    
+
     if (usuarioEditado) {
       await editUser(cleanData)
       Swal.fire({
@@ -71,17 +79,18 @@ export default function Admin_Users({sendRegister}) {
       })
     } else {
 
-       await sendRegister(cleanData)
-      
+      await sendRegister(cleanData)
+
       Swal.fire({
         icon: "success",
         title: "Has sido registrado",
-      }); } 
-      
-       await getUsers()
+      });
+    }
 
-    } 
- 
+    await getUsers()
+
+  }
+
   function handleDeleteProduct(data) {
 
     Swal.fire({
@@ -192,6 +201,8 @@ export default function Admin_Users({sendRegister}) {
                 type="text"
                 id="nombre"
               />
+              {errors.nombrecompleto && <p className='error'>{errors.nombrecompleto.message}</p>}
+
               <label htmlFor="email">Email</label>
               <input
                 {...register("email", { required: "Ingresa un email" })}
@@ -200,6 +211,8 @@ export default function Admin_Users({sendRegister}) {
                 type="email"
                 id="email"
               />
+              {errors.nombrecompleto && <p className='error'>{errors.nombrecompleto.message}</p>}
+
               <label htmlFor="contraseña">Contraseña</label>
               <input
                 {...register("password", {
@@ -210,7 +223,9 @@ export default function Admin_Users({sendRegister}) {
                 type="password"
                 id="contraseña"
               />
-              {errors.password && <p>{errors.password.message}</p>}
+              {errors.password && <p className='error'>{errors.password.message}</p>}
+
+
               <label htmlFor="repetir-contraseña">Repetir contraseña</label>
               <input
                 {...register("passwordConfirm", {
@@ -222,15 +237,20 @@ export default function Admin_Users({sendRegister}) {
                 id="repetir-contraseña"
 
               />
-              {errors.passwordConfirm && <p>{errors.passwordConfirm.message}</p>}
+              {errors.passwordConfirm && <p className='error'>{errors.passwordConfirm.message}</p>}
+
+
               <label htmlFor="date">Fecha de nacimiento</label>
               <input
-                {...register("date", { required: true })}
+                {...register("date", { required: "Ingresa una fecha de nacimiento válida" })}
                 max="2024-10-29"
                 placeholder="Fecha de nacimiento"
                 type="date"
                 id="date"
               />
+              {errors.date && <p className='error'>{errors.date.message}</p>}
+
+
               <label htmlFor="">Pais de nacimiento</label>
               <select id="pais" {...register("pais", { required: true })}>
                 <option value="United States">United States</option>
@@ -495,11 +515,14 @@ export default function Admin_Users({sendRegister}) {
                 <option value="Zambia">Zambia</option>
                 <option value="Zimbabwe">Zimbabwe</option>
               </select>
-              <input defaultValue={usuarioEditado ? "Editar ususario" : "Registrar"} id="submit" type="submit"/>
+              <input defaultValue={usuarioEditado ? "Editar ususario" : "Registrar"} id="submit" type="submit" />
             </form>
           </fieldset>
         </div>
       </div>
+      <button className="scroll-btn" onClick={() => scrollToBottom()}>
+        <FontAwesomeIcon icon={faArrowDown} id="scroll-icon" />
+      </button>
     </main>
   )
 

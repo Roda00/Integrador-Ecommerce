@@ -91,7 +91,15 @@
                 outline: none;
             }
         }
+
+        
     }
+}
+
+.error {
+    font-size: 0.9rem ;
+    color: rgba(255, 0, 0, 0.562);
+    font-weight: 700 ;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {

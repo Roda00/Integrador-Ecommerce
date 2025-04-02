@@ -19,6 +19,30 @@
             font-size: 2rem;
             color: grey;
         }
+
+    }
+    .btn-vaciarcart {
+        border: none;
+        background: none;
+
+        p {
+        
+            font-size: 1rem;
+            font-weight: 100;
+            cursor: pointer;
+            border: 1px solid black;
+            border-radius: 4px;
+            padding: 10px 20px;
+
+            transition: background-color .3s ease-in-out;
+            transition: color .3s ease-in-out;
+
+            &:hover {
+                background-color: #ff4444;
+                transition: all .09s ease-in-out;
+                color: white;
+            }
+        }
     }
 
     .chart-product-cont {

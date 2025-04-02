@@ -1,3 +1,4 @@
+
 .admin-users-cont {
     display: flex;
     flex-direction: column;
@@ -17,7 +18,7 @@
 
     .admin-users-form-cont {
         width: 50%;
-    
+
         #submit {
             align-self: center;
             margin-bottom: 20px;
@@ -31,39 +32,39 @@
             cursor: pointer;
             transition: color .2s ease-in-out;
             border-radius: 5px;
-    
+
             &:hover {
                 color: var(--hover-color)
             }
-    
+
             &:focus {
                 background-color: var(--secundary-color);
             }
         }
-    
+
         .admin-users-form {
             display: flex;
             align-items: center;
             flex-direction: column;
             gap: 10px;
-    
+
             #pais {
                 margin-bottom: 40px;
             }
-    
+
             .label-register {
                 align-self: flex-start;
                 margin: 20px 0px 20px 0px;
             }
-    
+
             input,
             select {
                 width: 100%;
                 padding: 20px;
-    
-    
+
+
             }
-    
+
             label+input {
                 position: relative;
                 border: none;
@@ -71,12 +72,12 @@
                 background: rgb(122, 122, 122);
                 background: linear-gradient(90deg, rgba(122, 122, 122, 0) 86%, rgba(2, 0, 36, 1) 100%);
                 border-radius: 2px;
-    
+
                 &:hover {
                     background: rgb(122, 122, 122);
                     background: linear-gradient(90deg, rgba(122, 122, 122, 0) 86%, rgba(204, 164, 59, 1) 100%);
                 }
-    
+
                 &:focus {
                     outline: none;
                 }
@@ -91,7 +92,8 @@
         border-collapse: collapse;
         margin-top: 20px;
 
-        th, td {
+        th,
+        td {
             padding: 10px;
             text-align: left;
             border-bottom: 1px solid #ddd;
@@ -101,6 +103,7 @@
             background-color: var(--primary-color);
             color: white;
         }
+
         tr:hover {
             background-color: #f1f1f1;
         }
@@ -125,9 +128,70 @@
                 cursor: pointer;
                 font-size: 1.3rem;
                 margin: 0px 10px;
-                
+
             }
 
         }
     }
+}
+
+.scroll-btn {
+
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 1.5rem;
+    border-radius: 50%;
+    background-color: rgba(231, 231, 231, 0.616);
+
+    border: 1px solid rgba(0, 0, 0, 0.219);
+    cursor: pointer;
+
+}
+
+
+
+@media screen and (width <=767px) {
+
+
+
+    .admin-users-table {
+        border: 0;
+    }
+
+    .admin-users-table thead {
+        display: none;
+    }
+
+    .admin-users-table tr {
+        display: block;
+        margin-bottom: 15px;
+        border-bottom: 2px solid var(--primary-color);
+    }
+
+    .admin-users-table td {
+        display: block;
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    .admin-users-form-cont {
+
+        width: 100% !important;
+    }
+
+    .scroll-btn {
+        bottom: 120px;
+        right: 20px;
+        font-size: 1.2rem;
+        width: 40px;
+    height: 40px;
+
+    }
+
+    
 }

@@ -3,13 +3,35 @@ import './Order.css'
 import { useOrder } from '../../Components/context/OrderContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMinus, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons'
+import Swal from 'sweetalert2'
 
 export default function Order() {
 
-  const { count, total, cart, disminuirCantidad, aumentarCantidad } = useOrder()
+  const { count, total, cart, disminuirCantidad, aumentarCantidad, vaciarCarrito } = useOrder()
 
   const precio = total.toLocaleString("es-AR")
 
+  function handleVaciarCarrito() {
+
+    Swal.fire({
+      title: "¿Estas seguro de vaciar tu orden?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, vaciar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        vaciarCarrito()
+        Swal.fire({
+          title: "Borrado",
+          text: "Tu carrito a sido vaciado",
+          icon: "success"
+        });
+      }
+    });
+
+  }
 
 
   function pintarProductos() {
@@ -63,6 +85,10 @@ export default function Order() {
               <p>${precio}</p>
             </div>
           </div>
+          {cart.length > 0 && (<button className="btn-vaciarcart" onClick={() => handleVaciarCarrito()}>
+            <p>Vaciar Carrito</p>
+          </button>)}
+
         </div>
       </section>
     </main>

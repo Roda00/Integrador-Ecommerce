@@ -11,7 +11,7 @@ import Swal from 'sweetalert2'
 export default function Admin_products({ pianos, sendForm, editForm, deleteProduct }) {
 
 
-    const { register, handleSubmit, reset, setValue } = useForm();
+    const { register, handleSubmit, reset, setValue, formState: {errors} } = useForm();
 
     const [productoEditado, setProductoEditado] = useState(null)
 
@@ -39,7 +39,7 @@ export default function Admin_products({ pianos, sendForm, editForm, deleteProdu
 
             return (
 
-                <tr>
+                <tr key={pianos.id}>
                     <td className="image-cell">
                         <img
                             src={pianos.image}
@@ -74,7 +74,7 @@ export default function Admin_products({ pianos, sendForm, editForm, deleteProdu
 
             return (
 
-                <tr>
+                <tr key={pianos.id}>
                     <td className="image-cell">
                         <img
                             src={pianos.image}
@@ -181,53 +181,64 @@ export default function Admin_products({ pianos, sendForm, editForm, deleteProdu
             <h1>Administrador de productos</h1>
             <div className="border-bottom-cont" />
             <div className="tables-container">
-                <div className="form-agregar-productos" onSubmit={handleSubmit(onSubmit)}>
-                    <form className='form-product' action="">
+                <div className="form-agregar-productos" >
+                    <form className='form-product' action="" onSubmit={handleSubmit(onSubmit)}>
                         <fieldset>
                             <legend>Agregar Pianos</legend>
                             <label htmlFor="">Nombre</label>
                             <input {...register('nombre', { required: "Ingresa el nombre del producto" })}
                                 type="text"
-                                placeholder='Nombre del producto'
-                            />
+                                placeholder='Nombre del producto'/>
+                            {errors.nombre && <p className='error'>{errors.nombre.message}</p>}
+
                             <label htmlFor="">Imagen principal</label>
                             <input {...register('image', { required: "Ingresa la URL de la imagen principal" })}
                                 type='text'
-                                placeholder='URL de la imagen'
-                            />
+                                placeholder='URL de la imagen'/>
+                            {errors.image && <p className='error'>{errors.image.message}</p>}
+
                             <label htmlFor="">Imagen secundaria</label>
                             <input {...register('image2', { required: "Ingresa la URL de la imagen secundaria" })}
                                 type="text"
-                                placeholder='URL de la imagen'
-                            />
+                                placeholder='URL de la imagen'/>
+                            {errors.image2 && <p className='error'>{errors.image2.message}</p>}
+
                             <label htmlFor="">Descrpción</label>
                             <textarea {...register('descripcion', { required: "Ingresa la descripción del producto" })}
                                 placeholder='Descripción del producto'
                             />
+                            {errors.descripcion && <p className='error'>{errors.descripcion.message}</p>}
+
                             <label htmlFor="">Precio</label>
                             <input {...register('precio', { required: "Ingresa el precio del producto" })}
                                 type="number"
                                 placeholder='Precio del producto'
-                                id='precio'
-                            />
+                                id='precio'/>
+                            {errors.precio && <p className='error'>{errors.precio.message}</p>}
+
                             <label htmlFor="">Color primario</label>
                             <input {...register('color1', { required: "Ingresa el link del color primario" })}
                                 type="text"
-                                placeholder='Url del color primario'
-                            />
+                                placeholder='Url del color primario'/> 
+                            {errors.color1 && <p className='error'>{errors.color1.message}</p>}
+
                             <label htmlFor="">Color secundario</label>
                             <input {...register('color2')}
                                 type="text"
-                                placeholder='Url del color secundario'
-                            />
+                                placeholder='Url del color secundario'/>
+
+
                             <label htmlFor="">Categoria</label>
                             <select {...register('categoria', { required: "Ingresa la categoria del piano" })}>
                                 <option value="Piano de cola">Piano de cola</option>
                                 <option value="Piano vertical">Piano vertical</option>
                             </select>
-                            <button id='submit' type='submit'>
-                                {productoEditado ? "Editar producto" : "Agregar producto"}
-                            </button>
+
+                            <div className="btn-cont">
+                                <button id='submit' type='submit'>
+                                    {productoEditado ? "Editar producto" : "Agregar producto"}
+                                </button>
+                            </div>
                         </fieldset>
                     </form>
                 </div>
