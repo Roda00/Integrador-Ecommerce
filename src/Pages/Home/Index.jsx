@@ -8,6 +8,7 @@ import Swal from 'sweetalert2'
 
 export default function Index({ pianos }) {
 
+
     const [selectedColor, setSelectedColor] = useState({})
 
     const { addCart } = useOrder()
@@ -29,14 +30,14 @@ export default function Index({ pianos }) {
 
         return pianosDeCola.map((piano) => {
 
-
+            console.log(piano)
             return (
                 <article>
                     <div className="piano-container" key={piano.id}>
                         <div className="piano-image-container">
                             <NavLink to={`/Piano-product/${piano.id} `} className="ver-mas">Ver mas </NavLink>
                             <img
-                                src={piano.image}
+                                src={`${import.meta.env.VITE_FILES_URL}/products/${piano.image}`}
                                 alt=""
                             />
                         </div>
@@ -46,7 +47,7 @@ export default function Index({ pianos }) {
                                 {piano.descripcion}
                             </p>
                             <div className="piano-product-colors-container">
-                                <img src={piano.color1} alt="" className={selectedColor[piano.id] === "color1" ? "active" : ""}
+                                <img src={`${import.meta.env.VITE_FILES_URL}/products/${piano.color}`} alt="" className={selectedColor[piano.id] === "color1" ? "active" : ""}
                                     onClick={() => setSelectedColor({ ...selectedColor, [piano.id]: "color1" })} />
                                 {piano.color2 && (
                                     <img src={piano.color2} alt="" className={selectedColor[piano.id] === "color2" ? "active" : ""}

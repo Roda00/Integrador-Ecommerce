@@ -18,7 +18,7 @@ import Admin_Users from './Pages/Admin-Users/Admin-Users'
 
 function App() {
 
-  const URL = `https://67daa41535c87309f52d63af.mockapi.io`
+  const URL = import.meta.env.VITE_API_URL
 
   const [pianos, setPianos] = useState([])
 
@@ -35,9 +35,9 @@ function App() {
   async function getPianos() {
 
     try {
-      const response = await axios.get(`${URL}/Pianos`)
+      const response = await axios.get(`${URL}/products`)
 
-      setPianos(response.data)
+      setPianos(response.data.products)
 
 
 

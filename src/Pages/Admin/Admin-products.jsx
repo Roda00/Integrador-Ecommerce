@@ -42,7 +42,7 @@ export default function Admin_products({ pianos, sendForm, editForm, deleteProdu
                 <tr key={pianos.id}>
                     <td className="image-cell">
                         <img
-                            src={pianos.image}
+                            src={`<img alt="" src="http://localhost:3000/products/${pianos.image}" />`}
                             alt=""
                         />
                     </td>
