@@ -61,8 +61,8 @@ function App() {
   async function sendForm(data) {
 
     try {
-      const send = await axios.post(`${URL}/Pianos`, data )
-      getPianos()
+      const send = await axios.post(`${URL}/products`, data )
+      getPianos(send.data.products)
       console.log(send)
 
     } catch (error) {

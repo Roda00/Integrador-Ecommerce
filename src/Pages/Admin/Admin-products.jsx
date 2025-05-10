@@ -10,8 +10,10 @@ import Swal from 'sweetalert2'
 
 export default function Admin_products({ pianos, sendForm, editForm, deleteProduct }) {
 
+    const URL = import.meta.env.VITE_FILES_URL
 
-    const { register, handleSubmit, reset, setValue, formState: {errors} } = useForm();
+
+    const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
 
     const [productoEditado, setProductoEditado] = useState(null)
 
@@ -39,10 +41,10 @@ export default function Admin_products({ pianos, sendForm, editForm, deleteProdu
 
             return (
 
-                <tr key={pianos.id}>
+                <tr key={pianos._id}>
                     <td className="image-cell">
                         <img
-                            src={`<img alt="" src="http://localhost:3000/products/${pianos.image}" />`}
+                            src={`${URL}/products/${pianos.image[0]}`}
                             alt=""
                         />
                     </td>
@@ -74,7 +76,7 @@ export default function Admin_products({ pianos, sendForm, editForm, deleteProdu
 
             return (
 
-                <tr key={pianos.id}>
+                <tr key={pianos._id}>
                     <td className="image-cell">
                         <img
                             src={pianos.image}
@@ -149,9 +151,30 @@ export default function Admin_products({ pianos, sendForm, editForm, deleteProdu
     }, [productoEditado])
 
     const onSubmit = (data) => {
+
+        const formData = new FormData()
+
+        formData.append('nombre', data.nombre)
+        formData.append('descripcion', data.descripcion)
+        formData.append('precio', data.precio)
+        formData.append('categoria', data.categoria)
+
+        if (data.image?.length) {
+            for (let i = 0; i < data.image.length; i++) {
+                formData.append('image', data.image[i])
+            }
+        }
+
+        if (data.color?.length) {
+
+            for (let i = 0; i < data.color.length; i++) {
+                formData.append('color', data.color[i])
+            }
+        }
+
         if (productoEditado) {
-            data.id = productoEditado.id
-            editForm(data)
+            formData.append("id", productoEditado.id)
+            editForm(formData)
             Swal.fire({
                 icon: 'success',
                 title: 'Producto editado correctamente',
@@ -159,7 +182,7 @@ export default function Admin_products({ pianos, sendForm, editForm, deleteProdu
                 timer: 1500
             });
         } else {
-            sendForm(data)
+            sendForm(formData)
             Swal.fire({
                 icon: 'success',
                 title: 'Producto agregado correctamente',
@@ -188,20 +211,17 @@ export default function Admin_products({ pianos, sendForm, editForm, deleteProdu
                             <label htmlFor="">Nombre</label>
                             <input {...register('nombre', { required: "Ingresa el nombre del producto" })}
                                 type="text"
-                                placeholder='Nombre del producto'/>
+                                placeholder='Nombre del producto' />
                             {errors.nombre && <p className='error'>{errors.nombre.message}</p>}
 
                             <label htmlFor="">Imagen principal</label>
                             <input {...register('image', { required: "Ingresa la URL de la imagen principal" })}
-                                type='text'
-                                placeholder='URL de la imagen'/>
-                            {errors.image && <p className='error'>{errors.image.message}</p>}
+                                type='file'
+                                accept='image/*'
+                                multiple
 
-                            <label htmlFor="">Imagen secundaria</label>
-                            <input {...register('image2', { required: "Ingresa la URL de la imagen secundaria" })}
-                                type="text"
-                                placeholder='URL de la imagen'/>
-                            {errors.image2 && <p className='error'>{errors.image2.message}</p>}
+                            />
+                            {errors.image && <p className='error'>{errors.image.message}</p>}
 
                             <label htmlFor="">Descrpción</label>
                             <textarea {...register('descripcion', { required: "Ingresa la descripción del producto" })}
@@ -213,20 +233,16 @@ export default function Admin_products({ pianos, sendForm, editForm, deleteProdu
                             <input {...register('precio', { required: "Ingresa el precio del producto" })}
                                 type="number"
                                 placeholder='Precio del producto'
-                                id='precio'/>
+                                id='precio' />
                             {errors.precio && <p className='error'>{errors.precio.message}</p>}
 
                             <label htmlFor="">Color primario</label>
-                            <input {...register('color1', { required: "Ingresa el link del color primario" })}
-                                type="text"
-                                placeholder='Url del color primario'/> 
+                            <input {...register('color', { required: "Ingresa el link del color primario" })}
+                                type="file"
+                                accept='image/*'
+                                multiple
+                            />
                             {errors.color1 && <p className='error'>{errors.color1.message}</p>}
-
-                            <label htmlFor="">Color secundario</label>
-                            <input {...register('color2')}
-                                type="text"
-                                placeholder='Url del color secundario'/>
-
 
                             <label htmlFor="">Categoria</label>
                             <select {...register('categoria', { required: "Ingresa la categoria del piano" })}>

@@ -8,6 +8,7 @@ import Swal from 'sweetalert2'
 
 export default function Index({ pianos }) {
 
+    const URL_upload = import.meta.env.VITE_FILES_URL
 
     const [selectedColor, setSelectedColor] = useState({})
 
@@ -33,11 +34,11 @@ export default function Index({ pianos }) {
             console.log(piano)
             return (
                 <article>
-                    <div className="piano-container" key={piano.id}>
+                    <div className="piano-container" key={piano._id}>
                         <div className="piano-image-container">
-                            <NavLink to={`/Piano-product/${piano.id} `} className="ver-mas">Ver mas </NavLink>
+                            <NavLink to={`/Piano-product/${piano._id} `} className="ver-mas">Ver mas </NavLink>
                             <img
-                                src={`${import.meta.env.VITE_FILES_URL}/products/${piano.image}`}
+                                src={`${URL_upload}/products/${piano.image[0]}`}
                                 alt=""
                             />
                         </div>
@@ -47,11 +48,11 @@ export default function Index({ pianos }) {
                                 {piano.descripcion}
                             </p>
                             <div className="piano-product-colors-container">
-                                <img src={`${import.meta.env.VITE_FILES_URL}/products/${piano.color}`} alt="" className={selectedColor[piano.id] === "color1" ? "active" : ""}
-                                    onClick={() => setSelectedColor({ ...selectedColor, [piano.id]: "color1" })} />
-                                {piano.color2 && (
-                                    <img src={piano.color2} alt="" className={selectedColor[piano.id] === "color2" ? "active" : ""}
-                                        onClick={() => setSelectedColor({ ...selectedColor, [piano.id]: "color2" })} />
+                                <img src={`${URL_upload}/products/${piano.color[0]}`} alt="" className={selectedColor[piano._id] === "color1" ? "active" : ""}
+                                    onClick={() => setSelectedColor({ ...selectedColor, [piano._id]: "color1" })} />
+                                {piano.color[1] && (
+                                    <img src={`${URL_upload}/products/${piano.color[1]}`} alt="" className={selectedColor[piano._id] === "color2" ? "active" : ""}
+                                        onClick={() => setSelectedColor({ ...selectedColor, [piano._id]: "color2" })} />
 
                                 )}
                             </div>
@@ -59,10 +60,10 @@ export default function Index({ pianos }) {
                                 <button
                                     className="buy-button"
                                     onClick={() => {
-                                        if (!selectedColor[piano.id]) {
+                                        if (!selectedColor[piano._id]) {
                                             Swal.fire("Debe seleccionar un color");
                                         } else {
-                                            addCart(piano, piano[selectedColor[piano.id]]);
+                                            addCart(piano, piano[selectedColor[piano._id]]);
                                         }
                                     }}
                                 >
@@ -88,9 +89,9 @@ export default function Index({ pianos }) {
 
             return (
                 <article>
-                    <div className="piano-container" key={piano.id}>
+                    <div className="piano-container" key={piano._id}>
                         <div className="piano-image-container">
-                            <NavLink to={`/Piano-product/${piano.id}`} className="ver-mas">Ver mas </NavLink>
+                            <NavLink to={`/Piano-product/${piano._id}`} className="ver-mas">Ver mas </NavLink>
                             <img
                                 src={piano.image}
                                 alt=""
@@ -102,11 +103,11 @@ export default function Index({ pianos }) {
                                 {piano.descripcion}
                             </p>
                             <div className="piano-product-colors-container">
-                                <img src={piano.color1} alt="" className={selectedColor[piano.id] === "color1" ? "active" : ""}
-                                    onClick={() => setSelectedColor({ ...selectedColor, [piano.id]: "color1" })} />
+                                <img src={piano.color1} alt="" className={selectedColor[piano._id] === "color1" ? "active" : ""}
+                                    onClick={() => setSelectedColor({ ...selectedColor, [piano._id]: "color1" })} />
                                 {piano.color2 && (
-                                    <img src={piano.color2} alt="" className={selectedColor[piano.id] === "color2" ? "active" : ""}
-                                        onClick={() => setSelectedColor({ ...selectedColor, [piano.id]: "color2" })} />
+                                    <img src={piano.color2} alt="" className={selectedColor[piano._id] === "color2" ? "active" : ""}
+                                        onClick={() => setSelectedColor({ ...selectedColor, [piano._id]: "color2" })} />
 
                                 )}
                             </div>
@@ -114,10 +115,10 @@ export default function Index({ pianos }) {
                                 <button
                                     className="buy-button"
                                     onClick={() => {
-                                        if (!selectedColor[piano.id]) {
+                                        if (!selectedColor[piano._id]) {
                                             Swal.fire("Debe seleccionar un color");
                                         } else {
-                                            addCart(piano, piano[selectedColor[piano.id]]);
+                                            addCart(piano, piano[selectedColor[piano._id]]);
                                         }
                                     }}
                                 >
