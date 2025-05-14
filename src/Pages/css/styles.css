@@ -186,6 +186,7 @@ h2 {
                 transition: scale 0.3s ease-in-out;
                 display: block;
                 aspect-ratio: 1/1;
+                object-fit: cover;
             }
 
         }

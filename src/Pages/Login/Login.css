@@ -1,0 +1,87 @@
+.login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+
+    #submit {
+
+        align-self: center;
+        margin-bottom: 90px;
+        padding: 20px;
+        width: 30%;
+        background-color: var(--primary-color);
+        color: white;
+        font-weight: 100;
+        font-size: 20px;
+        border: none;
+        cursor: pointer;
+        transition: color .2s ease-in-out;
+        border-radius: 5px;
+
+        &:hover {
+            color: var(--hover-color)
+        }
+
+        &:focus {
+            background-color: var(--secundary-color);
+        }
+    }
+
+
+    input,
+        select {
+            padding: 30px;
+            margin: 20px 0px 20px 0px;
+            width: 30%;
+        }
+
+
+    label+input {
+            border: none;
+            border-bottom: 1px solid var(--primary-color);
+            background: rgb(122, 122, 122);
+            background: linear-gradient(90deg, rgba(122, 122, 122, 0) 86%, rgba(2, 0, 36, 1) 100%);
+            border-radius: 2px;
+
+            &:hover {
+                background: rgb(122, 122, 122);
+                background: linear-gradient(90deg, rgba(122, 122, 122, 0) 86%, rgba(204, 164, 59, 1) 100%);
+            }
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+
+    .login-email-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+    }
+
+    .login-password-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+    }
+}
+
+@media screen and (width <=767px) {
+
+    .login-form {
+        input,
+        select {
+            width: 90%;
+        }
+
+        #submit {
+            width: 90%;
+        }
+    }
+
+
+}

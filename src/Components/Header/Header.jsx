@@ -4,14 +4,25 @@ import { NavLink } from 'react-router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping, faUser } from '@fortawesome/free-solid-svg-icons'
 import { useOrder } from '../context/OrderContext'
-
+import { useUser } from '../context/UserContext'
+import UserModal from '../userModal/UserModal'
+import { useState } from 'react'
 
 export default function Header() {
 
-    const {count, toggleCart} = useOrder()
+    const URL_UPLOAD = import.meta.env.VITE_FILES_URL
 
-    
-    
+    const { user } = useUser()
+
+    const { count, toggleCart } = useOrder()
+
+    const [isModalOpen, setIsModalOpen] = useState(false)
+
+    function toggleModal() {
+        setIsModalOpen(!isModalOpen);
+    }
+
+
     return (
         <header>
             <nav>
@@ -37,14 +48,18 @@ export default function Header() {
                                 <li className="nav-item">
                                     <NavLink to="/About-us">Acerca de nosotros</NavLink>
                                 </li>
-                                <li className="nav-item">
-                                    <NavLink to="/Admin-products">Admin productos</NavLink>
-                                </li>
-                                <li className="nav-item">
-                                    <NavLink to="/Admin-users">Admin usuarios</NavLink>
-                                </li>
+                                {user && user.role === "admin" && (
+                                    <>
+                                        <li className="nav-item">
+                                            <NavLink to="/Admin-products">Admin productos</NavLink>
+                                        </li>
+                                        <li className="nav-item">
+                                            <NavLink to="/Admin-users">Admin usuarios</NavLink>
+                                        </li>
+                                    </>
+                                )}
                             </ul>
-                    </div>
+                        </div>
                     </div>
                     <div className="nav-items-container">
                         <li className="nav-item">
@@ -59,22 +74,34 @@ export default function Header() {
                         <li className="nav-item">
                             <NavLink to="/About-us">Acerca de nosotros</NavLink>
                         </li>
-                        <li className="nav-item">
-                            <NavLink to="/Admin-products">Admin productos</NavLink>
-                        </li>
-                        <li className="nav-item">
+                        {user && user.role === "admin" && (
+                            <>
+                                <li className="nav-item">
+                                    <NavLink to="/Admin-products">Admin productos</NavLink>
+                                </li>
+                                <li className="nav-item">
                                     <NavLink to="/Admin-users">Admin usuarios</NavLink>
-                        </li>
+                                </li>
+                            </>
+                        )}
                     </div>
                     <div className="section-user">
                         <div className="shopping-cart">
                             <a className='user-cart' onClick={() => toggleCart()}>
-                            <FontAwesomeIcon icon={faCartShopping} />
-                            {count > 0 && <span className="cart-count">{count}</span>}
+                                <FontAwesomeIcon icon={faCartShopping} />
+                                {count > 0 && <span className="cart-count">{count}</span>}
                             </a>
                         </div>
                         <div className="user-icon">
-                            <FontAwesomeIcon icon={faUser} />
+                                
+                            <div className='user-modal' onClick={() => toggleModal()}>
+
+                                {user ? <img src={`${URL_UPLOAD}/users/${user.image[0]}`} alt="" /> : <FontAwesomeIcon icon={faUser}/>}
+
+                                {isModalOpen && (
+                                    <UserModal onClose={() => setIsModalOpen(false)} />
+                                )}
+                            </div>
                         </div>
                     </div>
                 </ul>

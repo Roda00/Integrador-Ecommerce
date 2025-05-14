@@ -4,12 +4,18 @@ import { useOrder } from '../../Components/context/OrderContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMinus, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons'
 import Swal from 'sweetalert2'
+import axios from 'axios'
+import { useUser } from '../../Components/context/UserContext'
 
 export default function Order() {
 
   const { count, total, cart, disminuirCantidad, aumentarCantidad, vaciarCarrito } = useOrder()
 
+  const { user, token } = useUser()
+
   const precio = total.toLocaleString("es-AR")
+
+  const URL = import.meta.env.VITE_API_URL
 
   function handleVaciarCarrito() {
 
@@ -30,6 +36,57 @@ export default function Order() {
         });
       }
     });
+
+  }
+
+  async function createOrder() {
+
+    try {
+
+      const products = cart.map((item) => {
+        return {
+          product: item._id,        
+          quantity: item.quantity,  
+          precio: item.precio       
+        };
+      });
+      const response = await axios.post(`${URL}/orders`, {
+        user: user,
+        products: products,
+        total: total
+      }, {
+        headers: {
+          access_token: token
+        }
+
+      })
+      Swal.fire({
+        title: "Orden creada",
+        text: "Tu orden fue creada con exito",
+        icon: "success"
+      })
+
+    } catch (error) {
+      console.error("Error al crear la orden:", error);
+
+    }
+
+  }
+
+  async function getOrders() {
+
+    try {
+      const response = await axios.get(`${URL}/orders`,{
+        headers: {
+          access_token: token
+        }
+      })
+      const orders = response.data;
+      console.log(orders);
+
+    } catch (error) {
+      console.error("Error al obtener las ordenes:", error);
+    }
 
   }
 
@@ -85,9 +142,19 @@ export default function Order() {
               <p>${precio}</p>
             </div>
           </div>
-          {cart.length > 0 && (<button className="btn-vaciarcart" onClick={() => handleVaciarCarrito()}>
-            <p>Vaciar Carrito</p>
-          </button>)}
+          {cart.length > 0 && (
+            <div className="btns-cont">
+
+              <button className="btn-vaciarcart" onClick={() => handleVaciarCarrito()}>
+                <p>Vaciar Carrito</p>
+              </button>
+              <button className="btn-finalizar" onClick={() => {createOrder(); getOrders(); vaciarCarrito()}}>
+                <p>Finalizar Compra</p>
+              </button>
+            </div>
+
+          )}
+
 
         </div>
       </section>

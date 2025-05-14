@@ -21,7 +21,35 @@
         }
 
     }
+
+    .btn-finalizar {
+        margin: 20px 0px 0px 20px;
+        border: none;
+        background: none;
+
+        p {
+        
+            font-size: 1rem;
+            font-weight: 100;
+            cursor: pointer;
+            border: 1px solid black;
+            border-radius: 4px;
+            padding: 10px 20px;
+
+            transition: background-color .3s ease-in-out;
+            transition: color .3s ease-in-out;
+
+            &:hover {
+                background-color: #301579;
+                transition: all .09s ease-in-out;
+                color: white;
+            }
+        }
+    }
+    }
+
     .btn-vaciarcart {
+        margin-top: 20px;
         border: none;
         background: none;
 
@@ -108,7 +136,9 @@
         }
 
         .chart-image {
-
+            width: 600px;
+            height: auto;
+            object-fit: cover;
             margin: 30px;
             display: flex;
             align-items: center;
@@ -118,7 +148,7 @@
                 width: 100%;
             }
         }
-    }
+    
 
 .total-cont {
     display: flex;

@@ -1,14 +1,19 @@
-import { faArrowDown, faPen, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faArrowDown, faPen, faTrash, faUpload } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './admin-users.css'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { get, set, useForm } from 'react-hook-form'
 import Swal from 'sweetalert2'
+import { useUser } from '../../Components/context/UserContext'
 
 export default function Admin_Users({ sendRegister }) {
 
-  const URL = `https://67daa41535c87309f52d63af.mockapi.io`
+  const {token} = useUser()
+
+  const URL = import.meta.env.VITE_API_URL
+
+  const URL_UPLOAD = import.meta.env.VITE_FILES_URL
 
   const { register, handleSubmit, reset, setValue, watch, formState: { errors } } = useForm();
 
@@ -57,9 +62,9 @@ export default function Admin_Users({ sendRegister }) {
   async function getUsers() {
 
     try {
-      const response = await axios.get(`${URL}/Usuarios`)
-
-      setUsers(response.data)
+      const response = await axios.get(`${URL}/users`)
+      
+      setUsers(response.data.users)
 
     } catch (error) {
       console.log(error)
@@ -68,28 +73,52 @@ export default function Admin_Users({ sendRegister }) {
   }
 
   const onSubmit = async (data) => {
-    const { password, passwordConfirm, ...cleanData } = data; reset();
 
 
-    if (usuarioEditado) {
-      await editUser(cleanData)
-      Swal.fire({
-        icon: "success",
-        title: "Usuario editado correctamente",
-      })
-    } else {
+    const formData = new FormData();
 
-      await sendRegister(cleanData)
 
-      Swal.fire({
-        icon: "success",
-        title: "Has sido registrado",
-      });
+
+    formData.append('nombrecompleto', data.nombrecompleto);
+    formData.append('email', data.email);
+    formData.append('date', data.date);
+    formData.append('pais', data.pais);
+    formData.append('password', data.password);
+
+    if (data.image?.length) {
+      for (let i = 0; i < data.image.length; i++) {
+        formData.append('image', data.image[i])
+      }
     }
 
-    await getUsers()
+    try {
+      if (usuarioEditado) {
+        await editUser(usuarioEditado, formData);
+        Swal.fire({
+          icon: "success",
+          title: "Usuario editado correctamente",
+        });
+      } else {
+         await sendRegister(formData);
+        Swal.fire({
+          icon: "success",
+          title: "Has sido registrado",
+        });
+      }
 
-  }
+      await getUsers();
+      reset();
+      
+    } catch (error) {
+      console.error("Error en el envío del formulario:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Ocurrió un error al procesar el formulario.",
+      });
+    }
+  };
+
 
   function handleDeleteProduct(data) {
 
@@ -117,7 +146,11 @@ export default function Admin_Users({ sendRegister }) {
   async function deleteProduct(data) {
 
     try {
-      const response = await axios.delete(`${URL}/Usuarios/${data.id}`)
+      const response = await axios.delete(`${URL}/users/${data._id}`, {
+        headers: {
+          access_token: token
+        }
+      })
 
       getUsers()
 
@@ -127,11 +160,15 @@ export default function Admin_Users({ sendRegister }) {
 
 
   }
-
-  async function editUser(data) {
+  async function editUser(data, formData) {
 
     try {
-      const send = await axios.put(`${URL}/Usuarios/${usuarioEditado.id}`, data)
+      const send = await axios.put(`${URL}/users/${data._id}`, formData, {
+        headers: {
+          access_token: token
+        }
+      })
+  
       getUsers()
       setUsuarioEditado(null)
 
@@ -148,13 +185,16 @@ export default function Admin_Users({ sendRegister }) {
 
       return (
 
-        <tr key={user.id}>
+        <tr key={user._id}>
           <td>
             {user.nombrecompleto}
           </td>
+          <td>
+            <img src={`${URL_UPLOAD}/users/${user.image[0]}`} alt="" />
+          </td>
           <td>{user.email}</td>
           <td>{user.pais}</td>
-          <td>{user.date}</td>
+          <td>{new Date(user.date).toLocaleDateString('es-AR')}</td>
           <td className="tools-cell">
             <button onClick={() => seleccionarUsuario(user)}>
               <FontAwesomeIcon icon={faPen} id="editar-icono" />
@@ -178,6 +218,7 @@ export default function Admin_Users({ sendRegister }) {
           <tbody>
             <tr>
               <th>Nombre</th>
+              <th>Foto</th>
               <th>Email</th>
               <th>Pais</th>
               <th>Fecha de nacimiento</th>
@@ -217,7 +258,7 @@ export default function Admin_Users({ sendRegister }) {
               <input
                 {...register("password", {
                   required: "Ingresa tu contraseña",
-                  minLength: { value: 8, message: "La contraseña debe tener 8 caracteres como minimo" }
+                  minLength: { value: 4, message: "La contraseña debe tener 8 caracteres como minimo" }
                 })}
                 placeholder="Contraseña"
                 type="password"
@@ -515,6 +556,16 @@ export default function Admin_Users({ sendRegister }) {
                 <option value="Zambia">Zambia</option>
                 <option value="Zimbabwe">Zimbabwe</option>
               </select>
+
+              <h3>Selecciona tu foto de perfil</h3>
+              <label htmlFor="file-upload" className='custom-file-upload'><FontAwesomeIcon className='upload-icon' icon={faUpload} />Foto de perfil</label>
+              <input
+                {...register("image", { required: "Ingresa una imagen de perfil" })}
+                type="file"
+                accept='image/*'
+                id="file-upload"
+
+              />
               <input defaultValue={usuarioEditado ? "Editar ususario" : "Registrar"} id="submit" type="submit" />
             </form>
           </fieldset>

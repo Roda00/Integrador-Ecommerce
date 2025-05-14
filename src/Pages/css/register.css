@@ -7,6 +7,38 @@
     font-family: "open sans";
 }
 
+.upload-cont {
+    display: flex;
+}
+
+.upload-icon {
+    padding-right: 15px;
+} 
+
+#file-upload {
+    display: none;
+    
+}
+
+h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+.custom-file-upload {
+  padding: 10px 20px;
+  background-color: var(--secundary-color);
+  color: white;
+  font-weight: 400;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+    margin:  10px 0px;
+}
+
+.custom-file-upload:hover {
+  background-color: #706eb3;
+}
+
 :root {
     --primary-color: #120d31;
     --secundary-color: #302f4d;
@@ -32,6 +64,7 @@
     #submit {
         align-self: center;
         margin-bottom: 90px;
+        margin-top: 20px;
         padding: 20px;
         width: 50%;
         background-color: var(--primary-color);

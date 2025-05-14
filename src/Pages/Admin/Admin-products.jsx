@@ -6,6 +6,7 @@ import axios from 'axios'
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useForm } from 'react-hook-form'
 import Swal from 'sweetalert2'
+import { useUser } from '../../Components/context/UserContext'
 
 
 export default function Admin_products({ pianos, sendForm, editForm, deleteProduct }) {
@@ -79,7 +80,7 @@ export default function Admin_products({ pianos, sendForm, editForm, deleteProdu
                 <tr key={pianos._id}>
                     <td className="image-cell">
                         <img
-                            src={pianos.image}
+                            src={`${URL}/products/${pianos.image[0]}`}
                             alt=""
                         />
                     </td>
@@ -136,12 +137,10 @@ export default function Admin_products({ pianos, sendForm, editForm, deleteProdu
 
 
             setValue('nombre', productoEditado.nombre)
-            setValue('image', productoEditado.image)
-            setValue('image2', productoEditado.image2)
+            setValue('image', productoEditado.image[0, 1])
             setValue('descripcion', productoEditado.descripcion)
             setValue('precio', productoEditado.precio)
-            setValue('color1', productoEditado.color1)
-            setValue('color2', productoEditado.color2)
+            setValue('color1', productoEditado.color)
             setValue('categoria', productoEditado.categoria)
 
         }
@@ -153,6 +152,7 @@ export default function Admin_products({ pianos, sendForm, editForm, deleteProdu
     const onSubmit = (data) => {
 
         const formData = new FormData()
+
 
         formData.append('nombre', data.nombre)
         formData.append('descripcion', data.descripcion)
@@ -172,15 +172,17 @@ export default function Admin_products({ pianos, sendForm, editForm, deleteProdu
             }
         }
 
+
+        
         if (productoEditado) {
-            formData.append("id", productoEditado.id)
-            editForm(formData)
+            editForm(productoEditado, formData)
             Swal.fire({
                 icon: 'success',
                 title: 'Producto editado correctamente',
                 showConfirmButton: false,
                 timer: 1500
             });
+            
         } else {
             sendForm(formData)
             Swal.fire({
@@ -236,7 +238,7 @@ export default function Admin_products({ pianos, sendForm, editForm, deleteProdu
                                 id='precio' />
                             {errors.precio && <p className='error'>{errors.precio.message}</p>}
 
-                            <label htmlFor="">Color primario</label>
+                            <label htmlFor="">Color </label>
                             <input {...register('color', { required: "Ingresa el link del color primario" })}
                                 type="file"
                                 accept='image/*'

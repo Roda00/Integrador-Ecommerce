@@ -5,7 +5,9 @@ import axios from 'axios'
 import { useOrder } from '../../Components/context/OrderContext'
 import Swal from 'sweetalert2'
 
-const URL = `https://67daa41535c87309f52d63af.mockapi.io`
+const URL = import.meta.env.VITE_API_URL
+
+const URL_UPLOAD = import.meta.env.VITE_FILES_URL
 
 export default function Piano_product() {
 
@@ -21,9 +23,11 @@ export default function Piano_product() {
     async function getPiano() {
 
       try {
-        const response = await axios.get(`${URL}/Pianos/${id}`)
+        const response = await axios.get(`${URL}/products/${id}`)
 
-        setProduct(response.data)
+        setProduct(response.data.product)
+
+        console.log(response.data.product)
       } catch (error) {
         console.log(error)
       }
@@ -32,6 +36,8 @@ export default function Piano_product() {
     getPiano()
 
   }, [])
+
+
 
   if (!product) {
     return <h1>Cargando...</h1>
@@ -46,7 +52,7 @@ export default function Piano_product() {
     <main>
       <div className="product-banner-container">
         <img
-          src={product.banner}
+          src="https://assets.speakcdn.com/assets/1942/steinway-sterling-model-o-ebony-polish-grand-piano-fallboard-logo-keyboard.jpg"
           alt="Piano de cola"
         />
       </div>
@@ -57,14 +63,14 @@ export default function Piano_product() {
               <li>
                 <img
                   id="slider-1"
-                  src={product.image}
+                  src={`${URL_UPLOAD}/products/${product.image[0]}`}
                   alt=""
                 />
               </li>
               <li>
                 <img
                   id="slider-2"
-                  src={product.image2}
+                  src={`${URL_UPLOAD}/products/${product.image[1]}`}
                   alt=""
                 />
               </li>
@@ -89,22 +95,31 @@ export default function Piano_product() {
             <div className="border-bottom-cont" />
             <h2>Colores disponibles</h2>
             <div className="piano-colors-container">
-              <img src={product.color1} alt="" className={selectedColor[product.id] === "color1" ? "active" : ""}
-                onClick={() => setSelectedColor({ ...selectedColor, [product.id]: "color1" })} />
-              {product.color2 && (
-                <img src={product.color2} alt="" className={selectedColor[product.id] === "color2" ? "active" : ""}
-                  onClick={() => setSelectedColor({ ...selectedColor, [product.id]: "color2" })} />
+              <img
+                src={`${URL_UPLOAD}/products/${product.color[0]}`}
+                alt=""
+                className={selectedColor[product._id] === "color1" ? "active" : ""}
+                onClick={() => setSelectedColor({ ...selectedColor, [product._id]: "color1" })}
+              />
 
+              {product.color[1] && (
+                <img
+                  src={`${URL_UPLOAD}/products/${product.color[1]}`}
+                  alt=""
+                  className={selectedColor[product._id] === "color2" ? "active" : ""}
+                  onClick={() => setSelectedColor({ ...selectedColor, [product._id]: "color2" })}
+                />
               )}
             </div>
             <div className="buy-button-cont">
               <button
                 className="buy-button"
                 onClick={() => {
-                  if (!selectedColor[product.id]) {
+                  if (!selectedColor[product._id]) {
                     Swal.fire("Debe seleccionar un color");
                   } else {
-                    addCart(product, product[selectedColor[product.id]]);
+                    const colorIndex = selectedColor[product._id] === "color1" ? 0 : 1;
+                    addCart(product, product.color[colorIndex]);
                   }
                 }}
               >

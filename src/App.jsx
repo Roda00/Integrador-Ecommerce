@@ -15,6 +15,10 @@ import Pianos_list from './Components/Pianos-list/Pianos-list'
 import Order from './Pages/Order/Order'
 import OrderModal from './Components/orderModal/OrderModal'
 import Admin_Users from './Pages/Admin-Users/Admin-Users'
+import Login from './Pages/Login/Login'
+import AdminGuard from '../services/guard/AdminGuard'
+import UserProfile from './Pages/UserProfile/UserProfile'
+import { useUser } from './Components/context/UserContext'
 
 function App() {
 
@@ -22,6 +26,7 @@ function App() {
 
   const [pianos, setPianos] = useState([])
 
+  const {token} = useUser()
 
   const [userEditado, setUserEditado] = useState(null)
 
@@ -36,7 +41,6 @@ function App() {
 
     try {
       const response = await axios.get(`${URL}/products`)
-
       setPianos(response.data.products)
 
 
@@ -44,15 +48,14 @@ function App() {
     } catch (error) {
       console.log(error)
     }
-    
+
   }
 
   async function sendRegister(data) {
 
     try {
-      const send = await axios.post(`${URL}/Usuarios`, data )
+      const send = await axios.post(`${URL}/users`, data)
 
-      console.log(send)
 
     } catch (error) {
       console.log(error)
@@ -61,31 +64,41 @@ function App() {
   async function sendForm(data) {
 
     try {
-      const send = await axios.post(`${URL}/products`, data )
+      const send = await axios.post(`${URL}/products`, data)
       getPianos(send.data.products)
-      console.log(send)
 
     } catch (error) {
       console.log(error)
     }
   }
 
-  async function editForm(data) {
-
+  async function editForm(productoEditado, formData) {
     try {
-      const send = await axios.put(`${URL}/Pianos/${data.id}`, data )
-      getPianos()
 
+
+      const response = await axios.put(`${URL}/products/${productoEditado._id}`, formData, {
+        headers: {
+          access_token: token
+        }
+      } );
+
+
+      getPianos();
     } catch (error) {
-      console.log(error)
-
+      console.log(error);
     }
   }
+
+
   async function deleteProduct(data) {
 
     try {
-      const send = await axios.delete(`${URL}/Pianos/${data.id}`)
-      
+      const send = await axios.delete(`${URL}/products/${data._id}`, {
+        headers: {
+          access_token: token
+        }
+      }) 
+
       getPianos()
 
     } catch (error) {
@@ -96,21 +109,28 @@ function App() {
 
   return (
     <>
-      <BrowserRouter>
       <Header />
-      <OrderModal/>
-        <Routes>
-          <Route path="/" element={<Index pianos={pianos}/>} />
-          <Route path="/Contacto" element={      <Contacto />    } />
-          <Route path="/About-us" element={      <Acerca_de_nosotros />    } />
-          <Route path="/Register" element={      <Register sendRegister={sendRegister} />    } />
-          <Route path="/Admin-products" element={      <Admin pianos={pianos} sendForm={sendForm} editForm={editForm}  deleteProduct={deleteProduct}  />    } />
-          <Route path="/Piano-product/:id" element={      <Piano pianos={pianos}/>   } />
-          <Route path="/Cart" element={      <Order  />    }/>
-          <Route path="/Admin-users" element={      <Admin_Users sendRegister={sendRegister} />    }/>
-        </Routes>
+      <OrderModal />
+      <Routes>
+        <Route path="/" element={<Index pianos={pianos} />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/Contacto" element={<Contacto />} />
+        <Route path="/About-us" element={<Acerca_de_nosotros />} />
+        <Route path="/Register" element={<Register sendRegister={sendRegister} />} />
+        <Route path="/Admin-products" element={
+          <AdminGuard>
+            <Admin pianos={pianos} sendForm={sendForm} editForm={editForm} deleteProduct={deleteProduct} />
+          </AdminGuard>
+        } />
+        <Route path="/Piano-product/:id" element={<Piano pianos={pianos} />} />
+        <Route path="/Cart" element={<Order />} />
+        <Route path="/Admin-users" element={
+          <AdminGuard>
+            <Admin_Users sendRegister={sendRegister} />
+          </AdminGuard>
+        } />
+      </Routes>
       <Footer />
-      </BrowserRouter>
 
     </>
   )

@@ -31,11 +31,10 @@ export default function Index({ pianos }) {
 
         return pianosDeCola.map((piano) => {
 
-            console.log(piano)
             return (
                 <article>
                     <div className="piano-container" key={piano._id}>
-                        <div className="piano-image-container">
+                        <div className="piano-image-container ">
                             <NavLink to={`/Piano-product/${piano._id} `} className="ver-mas">Ver mas </NavLink>
                             <img
                                 src={`${URL_upload}/products/${piano.image[0]}`}
@@ -48,11 +47,11 @@ export default function Index({ pianos }) {
                                 {piano.descripcion}
                             </p>
                             <div className="piano-product-colors-container">
-                                <img src={`${URL_upload}/products/${piano.color[0]}`} alt="" className={selectedColor[piano._id] === "color1" ? "active" : ""}
-                                    onClick={() => setSelectedColor({ ...selectedColor, [piano._id]: "color1" })} />
+                                <img src={`${URL_upload}/products/${piano.color[0]}`} alt="" className={selectedColor[piano._id] === piano.color[0] ? "active" : ""}
+                                    onClick={() => setSelectedColor({ ...selectedColor, [piano._id]: piano.color[0] })} />
                                 {piano.color[1] && (
-                                    <img src={`${URL_upload}/products/${piano.color[1]}`} alt="" className={selectedColor[piano._id] === "color2" ? "active" : ""}
-                                        onClick={() => setSelectedColor({ ...selectedColor, [piano._id]: "color2" })} />
+                                    <img src={`${URL_upload}/products/${piano.color[1]}`} alt="" className={selectedColor[piano._id] === piano.color[1]? "active" : ""}
+                                        onClick={() => setSelectedColor({ ...selectedColor, [piano._id]: piano.color[1] })} />
 
                                 )}
                             </div>
@@ -63,7 +62,7 @@ export default function Index({ pianos }) {
                                         if (!selectedColor[piano._id]) {
                                             Swal.fire("Debe seleccionar un color");
                                         } else {
-                                            addCart(piano, piano[selectedColor[piano._id]]);
+                                            addCart(piano, selectedColor[piano._id]);
                                         }
                                     }}
                                 >
@@ -93,7 +92,7 @@ export default function Index({ pianos }) {
                         <div className="piano-image-container">
                             <NavLink to={`/Piano-product/${piano._id}`} className="ver-mas">Ver mas </NavLink>
                             <img
-                                src={piano.image}
+                                src={`${URL_upload}/products/${piano.image[0]}`}
                                 alt=""
                             />
                         </div>
@@ -103,11 +102,11 @@ export default function Index({ pianos }) {
                                 {piano.descripcion}
                             </p>
                             <div className="piano-product-colors-container">
-                                <img src={piano.color1} alt="" className={selectedColor[piano._id] === "color1" ? "active" : ""}
-                                    onClick={() => setSelectedColor({ ...selectedColor, [piano._id]: "color1" })} />
-                                {piano.color2 && (
-                                    <img src={piano.color2} alt="" className={selectedColor[piano._id] === "color2" ? "active" : ""}
-                                        onClick={() => setSelectedColor({ ...selectedColor, [piano._id]: "color2" })} />
+                                <img src={`${URL_upload}/products/${piano.color[0]}`} alt="" className={selectedColor[piano._id] === piano.color[0] ? "active" : ""}
+                                    onClick={() => setSelectedColor({ ...selectedColor, [piano._id]: piano.color[0] })} />
+                                {piano.color[1] && (
+                                    <img src={`${URL_upload}/products/${piano.color[1]}`} alt="" className={selectedColor[piano._id] === piano.color[1]? "active" : ""}
+                                        onClick={() => setSelectedColor({ ...selectedColor, [piano._id]: piano.color[1] })} />
 
                                 )}
                             </div>
@@ -118,7 +117,7 @@ export default function Index({ pianos }) {
                                         if (!selectedColor[piano._id]) {
                                             Swal.fire("Debe seleccionar un color");
                                         } else {
-                                            addCart(piano, piano[selectedColor[piano._id]]);
+                                            addCart(piano, selectedColor[piano._id]);
                                         }
                                     }}
                                 >
@@ -150,12 +149,12 @@ export default function Index({ pianos }) {
                 </div>
                 <h2>Pianos de cola</h2>
                 <div className="border-bottom-cont" />
-                <div className="piano-product-container">
+                <div className="piano-product-container" >
                     {pintarPianosDeCola()}
                 </div>
                 <h2>Pianos verticales</h2>
                 <div className="border-bottom-cont" />
-                <div className="piano-product-container">
+                <div className="piano-product-container" >
                     {pintarPianosVerticales()}
                 </div>
                 <div className="features-container">

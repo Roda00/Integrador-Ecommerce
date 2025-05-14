@@ -1,9 +1,11 @@
+import axios from "axios";
 import { createContext, use, useContext, useEffect, useState } from "react";
 
 
 const OrderContext = createContext();
 
 export const useOrder = () => useContext(OrderContext);
+
 function OrderProvider({ children }) {
     const [cart, setCart] = useState([]); // guardar los productos 
 
@@ -13,6 +15,10 @@ function OrderProvider({ children }) {
 
     const [count, setCount] = useState(0); // cantidad de productos en el carrito
 
+    const [orders, setOrders] = useState([]); // guardar las ordenes
+
+    const URL = import.meta.env.VITE_API_URL
+    const URL_upload = import.meta.env.VITE_FILES_URL
 
     useEffect(() => {
         const cartLocalStorage = JSON.parse(localStorage.getItem("cart"))
@@ -22,7 +28,31 @@ function OrderProvider({ children }) {
     }, [])
 
 
+    async function getOrders() {
+
+        try {
+            const response = await axios.get(`${URL}/orders`)
+            setOrders(response.data)
+
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
     
+    async function createOrder() {
+
+        try {
+            const response = await axios.post(`${URL}/orders`, {
+            })
+            
+            orders(response.data)
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
     useEffect(() => {
         if (cart.length > 0) {
             localStorage.setItem("cart", JSON.stringify(cart));
@@ -62,17 +92,22 @@ function OrderProvider({ children }) {
 
     function addCart(piano, color) {
 
+        const image = `${URL_upload}/products/${piano.image[0]}`
 
-        const addToCart = cart.find((item) => item.id === piano.id && item.selectedColor === color)
+        color = `${URL_upload}/products/${color}` 
+
+        const addToCart = cart.find((item) => item._id === piano._id && item.selectedColor === color)
+
 
         if (!addToCart) {
             const newPiano = {
                 ...piano,
+                image: image,
+                selectedColor: color,
                 quantity: 1,
-                selectedColor: color
 
+                
             }
-
             setCart([...cart, newPiano])
 
         } else {
@@ -83,9 +118,10 @@ function OrderProvider({ children }) {
 
     }
 
+
     function aumentarCantidad(piano, color) {
 
-        const addToCart = cart.find((item) => item.id === piano.id && item.selectedColor === color)
+        const addToCart = cart.find((item) => item._id === piano._id && item.selectedColor === color)
 
         addToCart.quantity += 1
         setCart([...cart])
@@ -93,9 +129,8 @@ function OrderProvider({ children }) {
     }
     function disminuirCantidad(piano, color) {
 
-        const addToCart = cart.find((item) => item.id === piano.id && item.selectedColor === color)
+        const addToCart = cart.find((item) => item._id === piano._id && item.selectedColor === color)
 
-        console.log("Cantidad actual:", addToCart)
 
         if (addToCart.quantity <= 1) { cart.splice(0, 1) } else {
             addToCart.quantity -= 1
