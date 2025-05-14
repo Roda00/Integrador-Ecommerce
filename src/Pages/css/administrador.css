@@ -127,11 +127,11 @@ h1 {
             cursor: pointer;
             transition: color .2s ease-in-out;
             border-radius: 5px;
-    
+
             &:hover {
                 color: var(--hover-color)
             }
-    
+
             &:focus {
                 background-color: var(--secundary-color);
             }
@@ -145,7 +145,7 @@ h1 {
 
         fieldset {
             padding: 20px;
-            
+
             legend {
                 font-size: 1.5rem;
                 font-weight: 300;
@@ -206,13 +206,16 @@ h1 {
 
 fieldset .error {
 
-    font-size: 0.9rem ;
+    font-size: 0.9rem;
     color: rgba(255, 0, 0, 0.562);
-    font-weight: bold ;
+    font-weight: bold;
 }
 
 @media screen and (width <=767px) {
 
+    .form-agregar-productos {
+        width: 100%;
+    }
 
 
 
@@ -220,7 +223,7 @@ fieldset .error {
         width: 100%;
         display: flex;
         flex-direction: column;
-        
+
 
 
 

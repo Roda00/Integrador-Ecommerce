@@ -64,7 +64,11 @@ function App() {
   async function sendForm(data) {
 
     try {
-      const send = await axios.post(`${URL}/products`, data)
+      const send = await axios.post(`${URL}/products`, data, {
+        headers: {
+          access_token: token
+        }
+      })
       getPianos(send.data.products)
 
     } catch (error) {

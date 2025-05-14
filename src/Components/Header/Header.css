@@ -48,8 +48,8 @@
         position: absolute;
         right: 40px;
 
-        .shopping-cart,
-        .user-icon {
+
+        .user-icon-cont {
             font-size: 1.7rem;
             color: white;
             cursor: pointer;
@@ -157,16 +157,22 @@
 
             }
 
-            .user-icon {
+            .user-icon-cont {
                 font-size: .8rem;
                 position: absolute;
                 bottom: -29px;
 
                 .user-modal {
-                    position: absolute;
-                    top: -26px;
+
+                    .user-icon {
+                        position: absolute;
+                        top: -15px;
+                    }
+
 
                     img {
+                        position: absolute;
+                        top: -25px;
                         width: 30px;
                         height: 30px;
                         border-radius: 50%;

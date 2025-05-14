@@ -144,6 +144,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 @media screen and (width <=767px) {
 
     .form-cont-register {
-        width: 100%;
+        width: 80%;
     }
 }

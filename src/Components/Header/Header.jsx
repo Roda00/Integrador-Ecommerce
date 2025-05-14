@@ -92,11 +92,11 @@ export default function Header() {
                                 {count > 0 && <span className="cart-count">{count}</span>}
                             </a>
                         </div>
-                        <div className="user-icon">
+                        <div className="user-icon-cont">
                                 
                             <div className='user-modal' onClick={() => toggleModal()}>
 
-                                {user ? <img src={`${URL_UPLOAD}/users/${user.image[0]}`} alt="" /> : <FontAwesomeIcon icon={faUser}/>}
+                                {user ? <img src={`${URL_UPLOAD}/users/${user.image[0]}`} alt="" className='user-photo' /> : <FontAwesomeIcon className='user-icon' icon={faUser}/>}
 
                                 {isModalOpen && (
                                     <UserModal onClose={() => setIsModalOpen(false)} />

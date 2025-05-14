@@ -62,7 +62,11 @@ export default function Admin_Users({ sendRegister }) {
   async function getUsers() {
 
     try {
-      const response = await axios.get(`${URL}/users`)
+      const response = await axios.get(`${URL}/users`, {
+        headers: {
+          access_token: token
+        }
+      }) 
       
       setUsers(response.data.users)
 
